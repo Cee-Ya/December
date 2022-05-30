@@ -1,8 +1,10 @@
 package com.yarns.december.config;
 
+import cn.dev33.satoken.interceptor.SaRouteInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.yarns.december.support.constant.Constant;
+import com.yarns.december.support.constant.EndpointConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +12,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -20,7 +24,17 @@ import java.util.concurrent.ThreadPoolExecutor;
  **/
 @Slf4j
 @Configuration
-public class MvcConfigure {
+public class MvcConfigure implements WebMvcConfigurer {
+    /**
+     * 注册Sa-Token拦截器
+     * @param registry
+     */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        //路由拦截器
+        registry.addInterceptor(new SaRouteInterceptor()).addPathPatterns(EndpointConstant.ALL)
+                .excludePathPatterns(EndpointConstant.OAUTH_LOGIN,"/generator/zip");
+    }
 
     /**
      * 跨域处理
