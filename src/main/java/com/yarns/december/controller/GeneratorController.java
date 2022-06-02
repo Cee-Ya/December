@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,7 +44,7 @@ public class GeneratorController {
 
     /**
      * 获取表结构
-     * @param tableName
+     * @param tableName 表名称
      * @param request
      * @return
      */
@@ -57,8 +56,8 @@ public class GeneratorController {
 
     /**
      * 代码生成
-     * @param name
-     * @param remark
+     * @param name 需要生成的表 例如：t_sys_user
+     * @param remark 表的注释 例如：用户
      * @param response
      * @throws Exception
      */

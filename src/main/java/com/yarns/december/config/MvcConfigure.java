@@ -15,6 +15,7 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Collections;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
@@ -37,18 +38,21 @@ public class MvcConfigure implements WebMvcConfigurer {
     }
 
     /**
-     * 跨域处理
+     * 解决跨域问题
      * @return
      */
     @Bean
     public CorsFilter corsFilter() {
-        final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        final CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.addAllowedOrigin(CorsConfiguration.ALL);
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        //1,允许任何来源
+        corsConfiguration.setAllowedOriginPatterns(Collections.singletonList("*"));
+        //2,允许任何请求头
         corsConfiguration.addAllowedHeader(CorsConfiguration.ALL);
+        //3,允许任何方法
         corsConfiguration.addAllowedMethod(CorsConfiguration.ALL);
-        corsConfiguration.setMaxAge(600L);
+        //4,允许凭证
+        corsConfiguration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsFilter(source);
     }

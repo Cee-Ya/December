@@ -1,7 +1,6 @@
 package com.yarns.december.controller;
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
-import com.yarns.december.entity.base.ResponseBo;
 import com.yarns.december.entity.base.QueryRequest;
 import com.yarns.december.entity.system.SysUser;
 import com.yarns.december.support.annotation.ControllerEndpoint;

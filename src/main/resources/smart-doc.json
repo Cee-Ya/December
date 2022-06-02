@@ -8,5 +8,25 @@
   "style": "xt256",
   "projectName": "smart-doc",
   "showAuthor": true,
+  "requestHeaders": [
+    {
+      "name": "Authorization",
+      "type": "string",
+      "desc": "认证后返回的凭据",
+      "value": "token请求头的值",
+      "required": false,
+      "since": "0.0.1",
+      "pathPatterns": "/**",
+      "excludePathPatterns": "/auth/**,/generator/zip"
+    }
+  ],
+  "revisionLogs": [{
+    "version": "0.0.1",
+    "revisionTime": "2022-6-3 00:56:41",
+    "status": "create",
+    "author": "Yarns",
+    "remarks": "文档初始化"
+  }
+  ],
   "outPath": "src/main/resources/static/doc"
 }
