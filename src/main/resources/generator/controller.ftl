@@ -28,16 +28,25 @@ import java.util.Map;
 @RequestMapping("${className?uncap_first}")
 @RequiredArgsConstructor
 public class ${className}Controller {
+    private final ${className}Service ${className?uncap_first}Service;
 
-    @Autowired
-    private ${className}Service ${className?uncap_first}Service;
-
+    /**
+     * ${tableComment}列表
+     * @param request 分页部分
+     * @param ${className?uncap_first} 查询对象
+     * @return
+     */
     @GetMapping("list")
     public ResponseBo ${className?uncap_first}List(QueryRequest request, ${className} ${className?uncap_first}) {
         Map<String, Object> dataTable = CommonUtils.getDataTable(this.${className?uncap_first}Service.find${className}s(request, ${className?uncap_first}));
         return ResponseBo.result(dataTable);
     }
 
+    /**
+     * 新增${tableComment}
+     * @param ${className?uncap_first} ${tableComment}对象
+     * @return
+     */
     @PostMapping
     @ControllerEndpoint(operation = "新增${tableComment}", exceptionMessage = "新增${tableComment}失败")
     public ResponseBo add${className}(@Valid @RequestBody ${className} ${className?uncap_first}) {
@@ -45,6 +54,11 @@ public class ${className}Controller {
         return ResponseBo.ok();
     }
 
+    /**
+     * 修改${tableComment}
+     * @param ${className?uncap_first} ${tableComment}对象
+     * @return
+     */
     @PutMapping
     @ControllerEndpoint(operation = "修改${tableComment}", exceptionMessage = "修改${tableComment}失败")
     public ResponseBo update${className}(@Valid @RequestBody ${className} ${className?uncap_first}) {
@@ -52,7 +66,11 @@ public class ${className}Controller {
         return ResponseBo.ok();
     }
 
-
+    /**
+     * 删除${tableComment}
+     * @param ${className?uncap_first}Ids 需要删除的id
+     * @return
+     */
     @DeleteMapping
     @ControllerEndpoint(operation = "删除${tableComment}", exceptionMessage = "删除${tableComment}失败")
     public ResponseBo delete${className}s(@NotBlank(message = "{required}") String ${className?uncap_first}Ids) {

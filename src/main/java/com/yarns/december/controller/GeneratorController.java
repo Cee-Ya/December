@@ -43,6 +43,12 @@ public class GeneratorController {
     private final GeneratorConfigService generatorConfigService;
     private final GeneratorHelper generatorHelper;
 
+    /**
+     * 获取表结构
+     * @param tableName
+     * @param request
+     * @return
+     */
     @GetMapping("tables")
     public ResponseBo tablesInfo(String tableName, QueryRequest request) {
         Map<String, Object> dataTable = CommonUtils.getDataTable(generatorService.getTables(tableName, request, GeneratorConstant.DATABASE_TYPE, GeneratorConstant.DATABASE_NAME));

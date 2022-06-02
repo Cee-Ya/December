@@ -21,7 +21,6 @@ import java.util.Arrays;
  * @date ${date}
  */
 @Service("${className?uncap_first}Service")
-@Transactional(propagation = Propagation.SUPPORTS, readOnly = true, rollbackFor = Exception.class)
 public class ${className}ServiceImpl extends ServiceImpl<${className}Mapper, ${className}> implements ${className}Service {
 
     @Override

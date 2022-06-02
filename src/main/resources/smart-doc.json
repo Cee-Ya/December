@@ -1,0 +1,12 @@
+{
+  "serverUrl": "http://127.0.0.1:2323",
+  "allInOne": true,
+  "allInOneDocFileName": "index.html",
+  "coverOld": true,
+  "createDebugPage": true,
+  "packageFilters": "com.yarns.december.controller.*",
+  "style": "xt256",
+  "projectName": "smart-doc",
+  "showAuthor": true,
+  "outPath": "src/main/resources/static/doc"
+}
