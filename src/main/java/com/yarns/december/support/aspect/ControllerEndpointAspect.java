@@ -1,11 +1,11 @@
 package com.yarns.december.support.aspect;
 
-import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yarns.december.support.annotation.ControllerEndpoint;
 import com.yarns.december.support.utils.AddressUtils;
 import com.yarns.december.support.utils.CommonUtils;
 import com.yarns.december.support.utils.DateUtils;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -27,7 +27,10 @@ import java.util.Date;
 @SuppressWarnings("Duplicates")
 @Aspect
 @Component
+@RequiredArgsConstructor
 public class ControllerEndpointAspect extends AspectSupport {
+
+    private final ObjectMapper objectMapper;
 
     private Logger logger = LoggerFactory.getLogger("monitor");
 
@@ -60,7 +63,7 @@ public class ControllerEndpointAspect extends AspectSupport {
                 buildLog(point, targetMethod, ip, operation, username, start);
                 result = point.proceed();
                 //处理返回值
-                logger.info("返回值:{}", JSON.toJSONString(result));
+                logger.info("返回值:{}", objectMapper.writeValueAsString(result));
             }
             return result;
         } catch (Throwable throwable) {

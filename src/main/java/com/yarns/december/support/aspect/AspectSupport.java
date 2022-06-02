@@ -1,6 +1,6 @@
 package com.yarns.december.support.aspect;
 
-import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -52,7 +52,7 @@ public abstract class AspectSupport {
     }
 
     @SuppressWarnings("all")
-    protected StringBuilder handleJsonParams(StringBuilder params, Object[] args, String[] paramNames) {
+    protected StringBuilder handleJsonParams(StringBuilder params, Object[] args, String[] paramNames) throws JsonProcessingException {
         if (null != args) {
             params.append("[");
             StringBuilder sb1 = new StringBuilder();
@@ -72,9 +72,9 @@ public abstract class AspectSupport {
                     }
                 }else {
                     if (i == 0) {
-                        sb1.append("{").append("\"").append(paramNames[i]).append("\"").append(":").append(JSON.toJSONString(args[i])).append("}");
+                        sb1.append("{").append("\"").append(paramNames[i]).append("\"").append(":").append(objectMapper.writeValueAsString(args[i])).append("}");
                     } else {
-                        sb1.append(",{").append("\"").append(paramNames[i]).append("\"").append(":").append(JSON.toJSONString(args[i])).append("}");
+                        sb1.append(",{").append("\"").append(paramNames[i]).append("\"").append(":").append(objectMapper.writeValueAsString(args[i])).append("}");
                     }
                 }
             }

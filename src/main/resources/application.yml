@@ -1,5 +1,5 @@
 server:
-  port: 2324
+  port: 2323
   undertow:
     max-http-post-size: 0
     # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
@@ -9,7 +9,6 @@ server:
     #   buffers-per-region: 1024 # 这个参数不需要写了
     # 是否分配的直接内存
     direct-buffers: true
-
 
 spring:
   application:
@@ -33,7 +32,7 @@ spring:
           username: root
           password: 111111
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://127.0.0.1:3306/december?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8&zeroDateTimeBehavior=convertToNull
+          url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8&zeroDateTimeBehavior=convertToNull
   # redis数据库
   redis:
     database: 0

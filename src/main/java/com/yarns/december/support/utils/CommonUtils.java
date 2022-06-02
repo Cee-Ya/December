@@ -1,6 +1,5 @@
 package com.yarns.december.support.utils;
 
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.yarns.december.entity.base.Page;
@@ -32,9 +31,9 @@ public class CommonUtils {
     /**
      * 通用返回json分页数据
      * */
-    public static JSONObject viewReturnPageData(Page page, List pageLst) {
+    public static Map<String,Object> viewReturnPageData(Page page, List pageLst) {
         // 返回数据必须包含这个格式
-        JSONObject json = new JSONObject();
+        Map<String,Object> json = new HashMap<>(2);
         json.put("total", page.getTotalResult());
         json.put("rows", pageLst);
         return json;

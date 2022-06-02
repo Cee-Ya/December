@@ -56,7 +56,7 @@ public class GeneratorController {
      * @param response
      * @throws Exception
      */
-    @PostMapping
+    @GetMapping("zip")
     public void generate(@NotBlank(message = "{required}") String name, String remark, HttpServletResponse response) throws Exception {
         GeneratorConfig generatorConfig = generatorConfigService.findGeneratorConfig();
         if (generatorConfig == null) {
