@@ -1,10 +1,10 @@
 package ${basePackage}.${controllerPackage};
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
-import ResponseBo;
-import QueryRequest;
-import ControllerEndpoint;
-import CommonUtils;
+import ${basePackage}.entity.base.ResponseBo;
+import ${basePackage}.entity.base.QueryRequest;
+import ${basePackage}.support.utils.CommonUtils;
+import ${basePackage}.support.annotation.ControllerEndpoint;
 import ${basePackage}.${entityPackage}.${className};
 import ${basePackage}.${servicePackage}.${className}Service;
 import lombok.RequiredArgsConstructor;

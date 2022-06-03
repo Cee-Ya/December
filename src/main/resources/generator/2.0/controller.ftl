@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import ${basePackage}.entity.base.PageRes;
 import ${basePackage}.entity.base.CommonResult;
 import ${basePackage}.entity.base.QueryRequest;
-import ControllerEndpoint;
+import ${basePackage}.support.annotation.ControllerEndpoint;
 import ${basePackage}.${entityPackage}.${className};
 import ${basePackage}.${servicePackage}.${className}Service;
 import lombok.RequiredArgsConstructor;

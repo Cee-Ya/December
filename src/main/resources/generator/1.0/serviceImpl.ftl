@@ -1,6 +1,6 @@
 package ${basePackage}.${serviceImplPackage};
 
-import QueryRequest;
+import ${basePackage}.entity.base.QueryRequest;
 import ${basePackage}.${entityPackage}.${className};
 import ${basePackage}.${servicePackage}.${className}Service;
 import ${basePackage}.${mapperPackage}.${className}Mapper;

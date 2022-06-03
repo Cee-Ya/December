@@ -2,11 +2,9 @@ package ${basePackage}.${servicePackage};
 
 import ${basePackage}.${entityPackage}.${className};
 
-import QueryRequest;
+import ${basePackage}.entity.base.QueryRequest;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.List;
 
 /**
  * ${tableComment} Service接口
