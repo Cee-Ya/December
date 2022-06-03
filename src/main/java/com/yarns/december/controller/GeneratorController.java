@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -41,6 +42,11 @@ public class GeneratorController {
     private final GeneratorService generatorService;
     private final GeneratorConfigService generatorConfigService;
     private final GeneratorHelper generatorHelper;
+
+    @PostConstruct
+    public void printInit(){
+        log.warn("代码生成使用的数据库为【{}】", GeneratorConstant.DATABASE_NAME);
+    }
 
     /**
      * 获取表结构

@@ -1,6 +1,6 @@
 package ${basePackage}.${serviceImplPackage};
 
-import com.yarns.december.entity.base.QueryRequest;
+import QueryRequest;
 import ${basePackage}.${entityPackage}.${className};
 import ${basePackage}.${servicePackage}.${className}Service;
 import ${basePackage}.${mapperPackage}.${className}Mapper;

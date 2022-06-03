@@ -1,5 +1,6 @@
 package com.yarns.december.support.helper;
 
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Files;
@@ -7,11 +8,14 @@ import com.yarns.december.entity.generator.Column;
 import com.yarns.december.entity.generator.GeneratorConfig;
 import com.yarns.december.support.constant.Constant;
 import com.yarns.december.support.constant.GeneratorConstant;
+import com.yarns.december.support.exception.BaseException;
 import com.yarns.december.support.utils.CommonUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -34,7 +38,11 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class GeneratorHelper {
     private final ObjectMapper mapper;
+    @Getter
+    @Setter
+    private String version;
     public void generateEntityFile(List<Column> columns, GeneratorConfig configure) throws Exception {
+        version = configure.getVersion();
         String suffix = GeneratorConstant.JAVA_FILE_SUFFIX;
         String path = getFilePath(configure, configure.getEntityPackage(), suffix, false);
         String templateName = GeneratorConstant.ENTITY_TEMPLATE;
@@ -141,7 +149,10 @@ public class GeneratorHelper {
 
     private Template getTemplate(String templateName) throws Exception {
         Configuration configuration = new Configuration(Configuration.VERSION_2_3_23);
-        String templatePath = GeneratorHelper.class.getResource("/generator/").getPath();
+        if(StringUtils.isBlank(version)){
+            throw new BaseException("代码生成版本不能为空");
+        }
+        String templatePath = GeneratorHelper.class.getResource("/generator/"+version+ StringPool.SLASH).getPath();
         File file = new File(templatePath);
         if (!file.exists()) {
             templatePath = System.getProperties().getProperty(Constant.JAVA_TEMP_DIR);

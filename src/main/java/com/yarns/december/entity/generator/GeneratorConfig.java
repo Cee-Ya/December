@@ -37,6 +37,12 @@ public class GeneratorConfig implements Serializable {
     private String author;
 
     /**
+     * 版本 默认1.0  2.0版本接口部分返回实体
+     */
+    @TableField("version")
+    private String version;
+
+    /**
      * 基础包名
      */
     @TableField("base_package")

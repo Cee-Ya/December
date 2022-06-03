@@ -1,10 +1,10 @@
 package ${basePackage}.${controllerPackage};
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
-import com.yarns.december.entity.base.ResponseBo;
-import com.yarns.december.entity.base.QueryRequest;
-import com.yarns.december.support.annotation.ControllerEndpoint;
-import com.yarns.december.support.utils.CommonUtils;
+import ${basePackage}.entity.base.PageRes;
+import ${basePackage}.entity.base.CommonResult;
+import ${basePackage}.entity.base.QueryRequest;
+import ControllerEndpoint;
 import ${basePackage}.${entityPackage}.${className};
 import ${basePackage}.${servicePackage}.${className}Service;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
-import java.util.Map;
 
 /**
  * ${tableComment} Controller
@@ -37,9 +36,8 @@ public class ${className}Controller {
      * @return
      */
     @GetMapping("list")
-    public ResponseBo ${className?uncap_first}List(QueryRequest request, ${className} ${className?uncap_first}) {
-        Map<String, Object> dataTable = CommonUtils.getDataTable(this.${className?uncap_first}Service.find${className}s(request, ${className?uncap_first}));
-        return ResponseBo.result(dataTable);
+    public CommonResult<PageRes<${className}>> ${className?uncap_first}List(QueryRequest request, ${className} ${className?uncap_first}) {
+        return CommonResult.ok().setResult(PageRes.init(this.${className?uncap_first}Service.find${className}s(request, ${className?uncap_first})));
     }
 
     /**
@@ -49,9 +47,9 @@ public class ${className}Controller {
      */
     @PostMapping
     @ControllerEndpoint(operation = "新增${tableComment}", exceptionMessage = "新增${tableComment}失败")
-    public ResponseBo add${className}(@Valid @RequestBody ${className} ${className?uncap_first}) {
+    public CommonResult add${className}(@Valid @RequestBody ${className} ${className?uncap_first}) {
         this.${className?uncap_first}Service.create${className}(${className?uncap_first});
-        return ResponseBo.ok();
+        return CommonResult.ok();
     }
 
     /**
@@ -61,9 +59,9 @@ public class ${className}Controller {
      */
     @PutMapping
     @ControllerEndpoint(operation = "修改${tableComment}", exceptionMessage = "修改${tableComment}失败")
-    public ResponseBo update${className}(@Valid @RequestBody ${className} ${className?uncap_first}) {
+    public CommonResult update${className}(@Valid @RequestBody ${className} ${className?uncap_first}) {
         this.${className?uncap_first}Service.update${className}(${className?uncap_first});
-        return ResponseBo.ok();
+        return CommonResult.ok();
     }
 
     /**
@@ -73,9 +71,9 @@ public class ${className}Controller {
      */
     @DeleteMapping
     @ControllerEndpoint(operation = "删除${tableComment}", exceptionMessage = "删除${tableComment}失败")
-    public ResponseBo delete${className}s(@NotBlank(message = "{required}") String ${className?uncap_first}Ids) {
+    public CommonResult delete${className}s(@NotBlank(message = "{required}") String ${className?uncap_first}Ids) {
         String[] ids = ${className?uncap_first}Ids.split(StringPool.COMMA);
         this.${className?uncap_first}Service.delete${className}s(ids);
-        return ResponseBo.ok();
+        return CommonResult.ok();
     }
 }
