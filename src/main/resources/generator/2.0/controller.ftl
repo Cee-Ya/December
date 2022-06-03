@@ -26,6 +26,7 @@ import javax.validation.constraints.NotBlank;
 @RestController
 @RequestMapping("${className?uncap_first}")
 @RequiredArgsConstructor
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class ${className}Controller {
     private final ${className}Service ${className?uncap_first}Service;
 
