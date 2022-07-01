@@ -6,6 +6,7 @@ import com.yarns.december.support.annotation.ControllerEndpoint;
 import com.yarns.december.support.utils.AddressUtils;
 import com.yarns.december.support.utils.CommonUtils;
 import com.yarns.december.support.utils.DateUtils;
+import com.yarns.december.support.utils.LogErrorUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -76,7 +77,7 @@ public class ControllerEndpointAspect extends AspectSupport {
             }
             logger.info("#####################logError start##################");
             logger.info("异常信息:{}", throwable.getMessage());
-            logger.info("异常堆栈:{}", throwable.getStackTrace()[0].toString());
+            logger.error("内部业务异常:{}", LogErrorUtils.getMessage(throwable));
             throw new Exception(error);
         } finally {
             logger.info("#####################log end##################");

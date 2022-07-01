@@ -2,6 +2,7 @@ package com.yarns.december.support.handler;
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.yarns.december.entity.base.ResponseBo;
+import com.yarns.december.support.utils.LogErrorUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.Ordered;
@@ -36,7 +37,7 @@ public class YarnsExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseBo handleException(Exception e) {
-        e.printStackTrace();
+        log.error("内部业务异常:{}", LogErrorUtils.getMessage(e));
         return ResponseBo.warnMsg(e.getMessage());
     }
 
