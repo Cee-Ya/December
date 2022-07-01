@@ -2,6 +2,7 @@ package com.yarns.december.support.handler;
 
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.yarns.december.entity.base.ResponseBo;
+import com.yarns.december.support.utils.LogErrorUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.Ordered;
@@ -36,8 +37,8 @@ public class YarnsExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseBo handleException(Exception e) {
-        e.printStackTrace();
-        return ResponseBo.fail(e.getMessage());
+        log.error("内部业务异常:{}", LogErrorUtils.getMessage(e));
+        return ResponseBo.warnMsg(e.getMessage());
     }
 
     /**
@@ -55,7 +56,7 @@ public class YarnsExceptionHandler {
             message.append(error.getDefaultMessage()).append(StringPool.COMMA);
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
-        return ResponseBo.fail(message.toString());
+        return ResponseBo.warnMsg(message.toString());
     }
 
 
@@ -74,7 +75,7 @@ public class YarnsExceptionHandler {
             message.append(error.getDefaultMessage()).append(StringPool.COMMA);
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
-        return ResponseBo.fail(message.toString());
+        return ResponseBo.warnMsg(message.toString());
     }
 
     /**
@@ -94,26 +95,26 @@ public class YarnsExceptionHandler {
             message.append(pathArr[1]).append(violation.getMessage()).append(StringPool.COMMA);
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
-        return ResponseBo.fail(message.toString());
+        return ResponseBo.warnMsg(message.toString());
     }
 
 
     @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
     @ResponseStatus(HttpStatus.OK)
     public ResponseBo handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
-        return ResponseBo.fail("该方法不支持" + StringUtils.substringBetween(e.getMessage(), "'", "'") + "媒体类型");
+        return ResponseBo.warnMsg("该方法不支持" + StringUtils.substringBetween(e.getMessage(), "'", "'") + "媒体类型");
     }
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.OK)
     public ResponseBo handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        return ResponseBo.fail("该方法不支持" + StringUtils.substringBetween(e.getMessage(), "'", "'") + "请求方法");
+        return ResponseBo.warnMsg("该方法不支持" + StringUtils.substringBetween(e.getMessage(), "'", "'") + "请求方法");
     }
 
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
     @ResponseStatus(HttpStatus.OK)
     public ResponseBo handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
         log.error("系统内部异常，异常信息", e);
-        return ResponseBo.fail("缺失必要参数" + StringUtils.substringBetween(e.getMessage(), "'", "'"));
+        return ResponseBo.warnMsg("缺失必要参数" + StringUtils.substringBetween(e.getMessage(), "'", "'"));
     }
 }

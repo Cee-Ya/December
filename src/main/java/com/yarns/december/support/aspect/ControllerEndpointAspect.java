@@ -1,11 +1,12 @@
 package com.yarns.december.support.aspect;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yarns.december.support.annotation.ControllerEndpoint;
 import com.yarns.december.support.utils.AddressUtils;
 import com.yarns.december.support.utils.CommonUtils;
 import com.yarns.december.support.utils.DateUtils;
-import lombok.RequiredArgsConstructor;
+import com.yarns.december.support.utils.LogErrorUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -27,10 +28,7 @@ import java.util.Date;
 @SuppressWarnings("Duplicates")
 @Aspect
 @Component
-@RequiredArgsConstructor
 public class ControllerEndpointAspect extends AspectSupport {
-
-    private final ObjectMapper objectMapper;
 
     private Logger logger = LoggerFactory.getLogger("monitor");
 
@@ -63,7 +61,7 @@ public class ControllerEndpointAspect extends AspectSupport {
                 buildLog(point, targetMethod, ip, operation, username, start);
                 result = point.proceed();
                 //处理返回值
-                logger.info("返回值:{}", objectMapper.writeValueAsString(result));
+                logger.info("返回值:{}", JSON.toJSONString(result));
             }
             return result;
         } catch (Throwable throwable) {
@@ -79,7 +77,7 @@ public class ControllerEndpointAspect extends AspectSupport {
             }
             logger.info("#####################logError start##################");
             logger.info("异常信息:{}", throwable.getMessage());
-            logger.info("异常堆栈:{}", throwable.getStackTrace()[0].toString());
+            logger.error("内部业务异常:{}", LogErrorUtils.getMessage(throwable));
             throw new Exception(error);
         } finally {
             logger.info("#####################log end##################");
