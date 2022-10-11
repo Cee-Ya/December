@@ -1,9 +1,13 @@
 package com.yarns.december.support.utils;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yarns.december.entity.base.Page;
 import com.yarns.december.entity.base.PageData;
+import com.yarns.december.entity.system.vo.SysUserSessionVo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -12,6 +16,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +31,23 @@ import java.util.stream.IntStream;
  * @Date 17:46
  * @Version 1.0
  **/
+@Slf4j
 public class CommonUtils {
+    private static final String IP_UTILS_FLAG = ",";
+    private static final String UNKNOWN = "unknown";
+    private static final String LOCALHOST_IP = "0:0:0:0:0:0:0:1";
+    private static final String LOCALHOST_IP1 = "127.0.0.1";
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    /**
+     * 获取当前管理员用户
+     *
+     * @return
+     */
+    public static SysUserSessionVo getCurrentUserInfo() {
+        String userObj = StpUtil.getLoginDevice();
+        return objectMapper.convertValue(userObj, SysUserSessionVo.class);
+    }
 
 
     /**
@@ -176,17 +198,51 @@ public class CommonUtils {
      */
     public static String getHttpServletRequestIpAddress() {
         HttpServletRequest request = getHttpServletRequest();
-        String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
+        String ip = null;
+        try {
+            //以下两个获取在k8s中，将真实的客户端IP，放到了x-Original-Forwarded-For。而将WAF的回源地址放到了 x-Forwarded-For了。
+            ip = request.getHeader("X-Original-Forwarded-For");
+            if (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+                ip = request.getHeader("X-Forwarded-For");
+            }
+            //获取nginx等代理的ip
+            if (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+                ip = request.getHeader("x-forwarded-for");
+            }
+            if (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+                ip = request.getHeader("Proxy-Client-IP");
+            }
+            if (StringUtils.isEmpty(ip) || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+                ip = request.getHeader("WL-Proxy-Client-IP");
+            }
+            if (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+                ip = request.getHeader("HTTP_CLIENT_IP");
+            }
+            if (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+                ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+            }
+            //兼容k8s集群获取ip
+            if (StringUtils.isEmpty(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
+                ip = request.getRemoteAddr();
+                if (LOCALHOST_IP1.equalsIgnoreCase(ip) || LOCALHOST_IP.equalsIgnoreCase(ip)) {
+                    //根据网卡取本机配置的IP
+                    InetAddress iNet = null;
+                    try {
+                        iNet = InetAddress.getLocalHost();
+                    } catch (UnknownHostException e) {
+                        log.error("getClientIp error: ", e);
+                    }
+                    ip = Objects.requireNonNull(iNet).getHostAddress();
+                }
+            }
+        } catch (Exception e) {
+            log.error("IPUtils ERROR ", e);
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
+        //使用代理，则获取第一个IP地址
+        if (!StringUtils.isEmpty(ip) && ip.indexOf(IP_UTILS_FLAG) > 0) {
+            ip = ip.substring(0, ip.indexOf(IP_UTILS_FLAG));
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
+        return ip;
     }
 
     /**

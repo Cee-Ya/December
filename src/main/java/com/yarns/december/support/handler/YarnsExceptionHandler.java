@@ -38,7 +38,7 @@ public class YarnsExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseBo handleException(Exception e) {
         log.error("内部业务异常:{}", LogErrorUtils.getMessage(e));
-        return ResponseBo.warnMsg(e.getMessage());
+        return ResponseBo.fail(e.getMessage());
     }
 
     /**
@@ -56,7 +56,7 @@ public class YarnsExceptionHandler {
             message.append(error.getDefaultMessage()).append(StringPool.COMMA);
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
-        return ResponseBo.warnMsg(message.toString());
+        return ResponseBo.fail(message.toString());
     }
 
 
@@ -75,7 +75,7 @@ public class YarnsExceptionHandler {
             message.append(error.getDefaultMessage()).append(StringPool.COMMA);
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
-        return ResponseBo.warnMsg(message.toString());
+        return ResponseBo.fail(message.toString());
     }
 
     /**
@@ -95,26 +95,26 @@ public class YarnsExceptionHandler {
             message.append(pathArr[1]).append(violation.getMessage()).append(StringPool.COMMA);
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
-        return ResponseBo.warnMsg(message.toString());
+        return ResponseBo.fail(message.toString());
     }
 
 
     @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
     @ResponseStatus(HttpStatus.OK)
     public ResponseBo handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
-        return ResponseBo.warnMsg("该方法不支持" + StringUtils.substringBetween(e.getMessage(), "'", "'") + "媒体类型");
+        return ResponseBo.fail("该方法不支持" + StringUtils.substringBetween(e.getMessage(), "'", "'") + "媒体类型");
     }
 
     @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.OK)
     public ResponseBo handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        return ResponseBo.warnMsg("该方法不支持" + StringUtils.substringBetween(e.getMessage(), "'", "'") + "请求方法");
+        return ResponseBo.fail("该方法不支持" + StringUtils.substringBetween(e.getMessage(), "'", "'") + "请求方法");
     }
 
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
     @ResponseStatus(HttpStatus.OK)
     public ResponseBo handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
         log.error("系统内部异常，异常信息", e);
-        return ResponseBo.warnMsg("缺失必要参数" + StringUtils.substringBetween(e.getMessage(), "'", "'"));
+        return ResponseBo.fail("缺失必要参数" + StringUtils.substringBetween(e.getMessage(), "'", "'"));
     }
 }

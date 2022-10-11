@@ -3,6 +3,7 @@ package com.yarns.december.entity.base;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  */
 @SuppressWarnings("unchecked")
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class PageRes<T> {
     /**

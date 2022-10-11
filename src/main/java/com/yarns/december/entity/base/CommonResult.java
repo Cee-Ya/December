@@ -1,6 +1,7 @@
 package com.yarns.december.entity.base;
 
-import java.io.Serial;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.io.Serializable;
 
 /**
@@ -9,8 +10,8 @@ import java.io.Serializable;
  * @date 2022/6/3
  */
 @SuppressWarnings({"rawtypes", "unchecked"})
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommonResult<T> extends BaseResult implements Serializable {
-    @Serial
     private static final long serialVersionUID = -7268040542410707954L;
     public CommonResult() {
 
