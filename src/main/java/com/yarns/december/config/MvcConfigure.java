@@ -1,6 +1,7 @@
 package com.yarns.december.config;
 
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.yarns.december.support.constant.Constant;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -19,6 +21,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @date 15:49
  **/
 @Slf4j
+@EnableWebMvc
 @Configuration
 public class MvcConfigure {
 
@@ -47,6 +50,7 @@ public class MvcConfigure {
     public MybatisPlusInterceptor paginationInterceptor() {
         MybatisPlusInterceptor paginationInterceptor = new MybatisPlusInterceptor();
         paginationInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+        paginationInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
         return paginationInterceptor;
     }
 
