@@ -19,7 +19,7 @@ import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
- * 菜单 Controller
+ * 菜单管理
  *
  * @author Yarns
  * @date 2022-06-03 11:25:12
