@@ -1,5 +1,6 @@
 package com.yarns.december.config;
 
+import cn.dev33.satoken.interceptor.SaAnnotationInterceptor;
 import cn.dev33.satoken.interceptor.SaRouteInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -25,6 +27,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @date 15:49
  **/
 @Slf4j
+@EnableWebMvc
 @Configuration
 public class MvcConfigure implements WebMvcConfigurer {
     /**
@@ -36,6 +39,11 @@ public class MvcConfigure implements WebMvcConfigurer {
         //路由拦截器
         registry.addInterceptor(new SaRouteInterceptor()).addPathPatterns(EndpointConstant.ALL)
                 .excludePathPatterns(EndpointConstant.OAUTH_LOGIN,"/generator/zip");
+
+        //注解拦截器
+        registry.addInterceptor(new SaAnnotationInterceptor())
+                .excludePathPatterns(EndpointConstant.OAUTH_LOGIN,
+                        "/generator/zip");
     }
 
     /**
