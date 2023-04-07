@@ -29,7 +29,7 @@ public class AuthController {
      * @throws Exception
      */
     @PostMapping("/login")
-    @ControllerEndpoint(operation = "登录",exceptionMessage = "登录失败")
+    @ControllerEndpoint(operation = "登录")
     public CommonResult<String> login(@RequestBody @Valid LoginBo bo) throws Exception {
         return CommonResult.ok().setResult(sysUserAdapter.login(bo));
     }

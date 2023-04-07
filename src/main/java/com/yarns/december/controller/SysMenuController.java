@@ -7,7 +7,6 @@ import com.yarns.december.entity.base.RoleMenuTree;
 import com.yarns.december.entity.system.bo.SysMenuAddBo;
 import com.yarns.december.entity.system.bo.SysMenuEditBo;
 import com.yarns.december.entity.system.vo.MenuTreeVo;
-import com.yarns.december.service.SysMenuService;
 import com.yarns.december.support.annotation.ControllerEndpoint;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +56,7 @@ public class SysMenuController {
      * @return
      */
     @PostMapping
-    @ControllerEndpoint(operation = "新增菜单", exceptionMessage = "新增菜单失败")
+    @ControllerEndpoint(operation = "新增菜单")
     public CommonResult addSysMenu(@Valid @RequestBody SysMenuAddBo sysMenu) {
         this.sysMenuAdapter.createSysMenu(sysMenu);
         return CommonResult.ok();
@@ -69,7 +68,7 @@ public class SysMenuController {
      * @return
      */
     @PutMapping
-    @ControllerEndpoint(operation = "修改菜单", exceptionMessage = "修改菜单失败")
+    @ControllerEndpoint(operation = "修改菜单")
     public CommonResult updateSysMenu(@Valid @RequestBody SysMenuEditBo sysMenu) {
         this.sysMenuAdapter.updateSysMenu(sysMenu);
         return CommonResult.ok();
@@ -81,7 +80,7 @@ public class SysMenuController {
      * @return
      */
     @DeleteMapping
-    @ControllerEndpoint(operation = "删除菜单", exceptionMessage = "删除菜单失败")
+    @ControllerEndpoint(operation = "删除菜单")
     public CommonResult deleteSysMenus(@NotBlank(message = "菜单ids不能为空") String sysMenuIds) {
         String[] ids = sysMenuIds.split(StringPool.COMMA);
         this.sysMenuAdapter.deleteSysMenus(ids);

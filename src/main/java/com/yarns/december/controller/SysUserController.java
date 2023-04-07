@@ -88,7 +88,7 @@ public class SysUserController {
      * @return
      */
     @PostMapping
-    @ControllerEndpoint(operation = "新增用户", exceptionMessage = "新增用户失败")
+    @ControllerEndpoint(operation = "新增用户")
     public CommonResult addSysUser(@Valid @RequestBody SysUserBo sysUser) throws BaseException {
         this.sysUserAdapter.createSysUser(sysUser);
         return CommonResult.ok();
@@ -110,7 +110,7 @@ public class SysUserController {
      * @return
      */
     @PutMapping("pass")
-    @ControllerEndpoint(operation = "修改密码", exceptionMessage = "修改密码失败")
+    @ControllerEndpoint(operation = "修改密码")
     public CommonResult updatePass(@Valid @RequestBody SysUserPutPassBo sysUser) throws BaseException {
         this.sysUserAdapter.updatePass(sysUser);
         return CommonResult.ok();
@@ -122,7 +122,7 @@ public class SysUserController {
      * @return
      */
     @PutMapping
-    @ControllerEndpoint(operation = "修改用户信息", exceptionMessage = "修改用户信息失败")
+    @ControllerEndpoint(operation = "修改用户信息")
     public CommonResult updateUser(@Valid @RequestBody SysUserEditBo sysUser) throws BaseException {
         this.sysUserAdapter.updateUser(sysUser);
         return CommonResult.ok();
@@ -134,7 +134,7 @@ public class SysUserController {
      * @return
      */
     @DeleteMapping
-    @ControllerEndpoint(operation = "删除用户", exceptionMessage = "删除用户失败")
+    @ControllerEndpoint(operation = "删除用户")
     public CommonResult deleteSysUsers(@NotBlank(message = "{required}") String sysUserIds) throws BaseException {
         val ids = sysUserIds.split(StringPool.COMMA);
         this.sysUserAdapter.deleteSysUsers(ids);

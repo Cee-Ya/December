@@ -1,7 +1,7 @@
 package com.yarns.december.config;
 
-import cn.dev33.satoken.interceptor.SaAnnotationInterceptor;
-import cn.dev33.satoken.interceptor.SaRouteInterceptor;
+import cn.dev33.satoken.interceptor.SaInterceptor;
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.yarns.december.support.constant.Constant;
@@ -37,11 +37,11 @@ public class MvcConfigure implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //路由拦截器
-        registry.addInterceptor(new SaRouteInterceptor()).addPathPatterns(EndpointConstant.ALL)
+        registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin())).addPathPatterns(EndpointConstant.ALL)
                 .excludePathPatterns(EndpointConstant.OAUTH_LOGIN,"/generator/zip");
 
         //注解拦截器
-        registry.addInterceptor(new SaAnnotationInterceptor())
+        registry.addInterceptor(new SaInterceptor())
                 .excludePathPatterns(EndpointConstant.OAUTH_LOGIN,
                         "/generator/zip");
     }

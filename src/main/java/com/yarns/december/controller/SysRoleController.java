@@ -75,7 +75,7 @@ public class SysRoleController {
      * @return
      */
     @PostMapping
-    @ControllerEndpoint(operation = "新增角色", exceptionMessage = "新增角色失败")
+    @ControllerEndpoint(operation = "新增角色")
     public CommonResult addSysRole(@Valid @RequestBody SysRoleAddBo sysRole) throws BaseException {
         this.sysRoleAdapter.createSysRole(sysRole);
         return CommonResult.ok();
@@ -87,7 +87,7 @@ public class SysRoleController {
      * @return
      */
     @PutMapping
-    @ControllerEndpoint(operation = "修改角色", exceptionMessage = "修改角色失败")
+    @ControllerEndpoint(operation = "修改角色")
     public CommonResult updateSysRole(@Valid @RequestBody SysRoleEditBo sysRole) throws BaseException {
         this.sysRoleAdapter.updateSysRole(sysRole);
         return CommonResult.ok();
@@ -99,7 +99,7 @@ public class SysRoleController {
      * @return
      */
     @DeleteMapping
-    @ControllerEndpoint(operation = "删除角色", exceptionMessage = "删除角色失败")
+    @ControllerEndpoint(operation = "删除角色")
     public CommonResult deleteSysRoles(@NotBlank(message = "角色ids不能为空") String sysRoleIds) {
         String[] ids = sysRoleIds.split(StringPool.COMMA);
         this.sysRoleAdapter.deleteSysRoles(ids);
