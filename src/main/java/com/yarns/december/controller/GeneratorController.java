@@ -16,10 +16,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -43,6 +43,17 @@ public class GeneratorController {
     private final GeneratorConfigService generatorConfigService;
     private final GeneratorHelper generatorHelper;
 
+    @PostConstruct
+    public void printInit(){
+        log.warn("代码生成使用的数据库为【{}】", GeneratorConstant.DATABASE_NAME);
+    }
+
+    /**
+     * 获取表结构
+     * @param tableName 表名称
+     * @param request
+     * @return
+     */
     @GetMapping("tables")
     public ResponseBo tablesInfo(String tableName, QueryRequest request) {
         Map<String, Object> dataTable = CommonUtils.getDataTable(generatorService.getTables(tableName, request, GeneratorConstant.DATABASE_TYPE, GeneratorConstant.DATABASE_NAME));
@@ -51,12 +62,12 @@ public class GeneratorController {
 
     /**
      * 代码生成
-     * @param name
-     * @param remark
+     * @param name 需要生成的表 例如：t_sys_user
+     * @param remark 表的注释 例如：用户
      * @param response
      * @throws Exception
      */
-    @PostMapping
+    @GetMapping("zip")
     public void generate(@NotBlank(message = "{required}") String name, String remark, HttpServletResponse response) throws Exception {
         GeneratorConfig generatorConfig = generatorConfigService.findGeneratorConfig();
         if (generatorConfig == null) {

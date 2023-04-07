@@ -13,14 +13,17 @@ public class ResponseBo extends HashMap<String, Object> implements Serializable 
 
     private static final long serialVersionUID = -8713837118340960775L;
 
-    public ResponseBo message(String message) {
-        this.put("message", message);
-        return this;
+    public ResponseBo() {
+        this.put("success", true);
+        this.put("timestamp", String.valueOf(System.currentTimeMillis()));
     }
 
-    public ResponseBo data(Object data) {
-        this.put("data", data);
-        return this;
+    public static ResponseBo cus(Integer code, String message) {
+        ResponseBo responseBo = new ResponseBo();
+        responseBo.put("message",message);
+        responseBo.put("code",code);
+        responseBo.put("success",false);
+        return responseBo;
     }
 
     @Override
@@ -44,42 +47,14 @@ public class ResponseBo extends HashMap<String, Object> implements Serializable 
         ResponseBo responseBo = new ResponseBo();
         responseBo.put("message","操作失败");
         responseBo.put("code",500);
+        responseBo.put("success",false);
         return responseBo;
     }
     public static ResponseBo fail(String msg){
         ResponseBo responseBo = new ResponseBo();
         responseBo.put("message",msg);
-        responseBo.put("code",502);
-        return responseBo;
-    }
-    public static ResponseBo stack(String stack){
-        ResponseBo responseBo = new ResponseBo();
-        responseBo.put("stack",stack);
-        responseBo.put("message","操作失败");
-        responseBo.put("code",502);
-        return responseBo;
-    }
-
-    public static ResponseBo warnMsg(String msg){
-        ResponseBo responseBo = new ResponseBo();
-        responseBo.put("message","操作异常:"+msg);
-        responseBo.put("code",501);
-        return responseBo;
-    }
-
-    public static ResponseBo warnData(Object data){
-        ResponseBo responseBo = new ResponseBo();
-        responseBo.put("message","操作异常");
-        responseBo.put("code",501);
-        responseBo.put("data",data);
-        return responseBo;
-    }
-
-
-    public static ResponseBo message(String msg, Integer code){
-        ResponseBo responseBo = new ResponseBo();
-        responseBo.put("message",msg);
-        responseBo.put("code",code);
+        responseBo.put("code",500);
+        responseBo.put("success",false);
         return responseBo;
     }
 
@@ -93,12 +68,5 @@ public class ResponseBo extends HashMap<String, Object> implements Serializable 
 
     public Integer getCode() {
         return Integer.valueOf(get("code").toString());
-    }
-
-    public static ResponseBo cus(Integer value, String msg) {
-        ResponseBo responseBo = new ResponseBo();
-        responseBo.put("message",msg);
-        responseBo.put("code",value);
-        return responseBo;
     }
 }

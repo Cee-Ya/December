@@ -1,15 +1,21 @@
 package com.yarns.december.support.helper;
 
-import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Files;
 import com.yarns.december.entity.generator.Column;
 import com.yarns.december.entity.generator.GeneratorConfig;
 import com.yarns.december.support.constant.Constant;
 import com.yarns.december.support.constant.GeneratorConstant;
+import com.yarns.december.support.exception.BaseException;
 import com.yarns.december.support.utils.CommonUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +24,7 @@ import org.springframework.stereotype.Component;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -25,17 +32,22 @@ import java.util.Objects;
  *
  * @author Yarns
  */
-@SuppressWarnings("Duplicates")
+@SuppressWarnings({"Duplicates", "ClassCanBeRecord", "rawtypes", "unchecked"})
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class GeneratorHelper {
-
+    private final ObjectMapper mapper;
+    @Getter
+    @Setter
+    private String version;
     public void generateEntityFile(List<Column> columns, GeneratorConfig configure) throws Exception {
+        version = configure.getVersion();
         String suffix = GeneratorConstant.JAVA_FILE_SUFFIX;
         String path = getFilePath(configure, configure.getEntityPackage(), suffix, false);
         String templateName = GeneratorConstant.ENTITY_TEMPLATE;
         File entityFile = new File(path);
-        JSONObject data = toJSONObject(configure);
+        Map data = toJSONObject(configure);
         data.put("hasDate", false);
         data.put("hasBigDecimal", false);
         columns.forEach(c -> {
@@ -88,7 +100,7 @@ public class GeneratorHelper {
         String path = getFilePath(configure, configure.getMapperXmlPackage(), suffix, false);
         String templateName = GeneratorConstant.MAPPERXML_TEMPLATE;
         File mapperXmlFile = new File(path);
-        JSONObject data = toJSONObject(configure);
+        Map data = toJSONObject(configure);
         columns.forEach(c -> c.setField(CommonUtils.underscoreToCamel(StringUtils.lowerCase(c.getName()))));
         data.put("columns", columns);
         generateFileByTemplate(templateName, mapperXmlFile, data);
@@ -123,13 +135,24 @@ public class GeneratorHelper {
         return String.format("/%s/", packageName.contains(".") ? packageName.replaceAll("\\.", "/") : packageName);
     }
 
-    private JSONObject toJSONObject(Object o) {
-        return JSONObject.parseObject(JSONObject.toJSON(o).toString());
+    /**
+     * 2022-6-2 23:33:07 发现的
+     * SkipTransientField 如果是true，类中的Get方法对应的Field是transient，序列化时将会被忽略。默认为true
+     *
+     * @param o
+     * @return
+     */
+    private Map toJSONObject(Object o) throws JsonProcessingException {
+//        return JSONObject.parseObject(JSONObject.toJSONString(o, features));
+        return mapper.readValue(mapper.writeValueAsString(o),Map.class);
     }
 
     private Template getTemplate(String templateName) throws Exception {
         Configuration configuration = new Configuration(Configuration.VERSION_2_3_23);
-        String templatePath = GeneratorHelper.class.getResource("/generator/").getPath();
+        if(StringUtils.isBlank(version)){
+            throw new BaseException("代码生成版本不能为空");
+        }
+        String templatePath = GeneratorHelper.class.getResource("/generator/"+version+ StringPool.SLASH).getPath();
         File file = new File(templatePath);
         if (!file.exists()) {
             templatePath = System.getProperties().getProperty(Constant.JAVA_TEMP_DIR);

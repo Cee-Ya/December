@@ -1,6 +1,5 @@
 package com.yarns.december.support.helper;
 
-import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.BeanWrapperImpl;
 
 import java.beans.PropertyDescriptor;
@@ -14,21 +13,6 @@ import java.util.HashMap;
  *	反射工具
  */
 public class ReflectHelper {
-
-
-	/**
-	 * 通过反射获取obj对象指定keys并添加到json中
-	 * @param obj
-	 * @param key
-	 * @return
-	 */
-	public static JSONObject initKeyToClass(Object obj, String[] key) {
-		JSONObject json = new JSONObject();
-		for (String aKey : key) {
-			json.put(aKey, ReflectHelper.getFieldValue(obj, aKey));
-		}
-		return json;
-	}
 
 	/**
 	 * 获取obj对象fieldName的Field

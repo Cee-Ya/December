@@ -12,6 +12,26 @@ public class Constant {
     public static final Long BASIC_ROLE_ID = 1L;
 
     /**
+     * 超管
+     */
+    public static final String ADMIN_ROLE = "admin";
+
+    /**
+     * 基础密码
+     */
+    public static final String BASE_PASS = "111111";
+
+    /**
+     * 系统配置盲盒code
+     */
+    public static final String AGENT_BIND_BOX_CODE = "agent_product_code";
+
+    /**
+     * 库存扣减锁标识
+     */
+    public static final String AGENT_CLOUD_LOCK = "AgentStockLock:";
+
+    /**
      * 图片存放的路径
      */
     public static final String STATIC_IMAGES_FOLDER = "images";

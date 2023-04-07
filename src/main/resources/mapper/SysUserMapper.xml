@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yarns.december.mapper.SysUserMapper">
+    <update id="updateSysUserStateByAgentId">
+        UPDATE t_sys_user set user_status = #{agentStatus} WHERE id = #{id}
+    </update>
+    <update id="updateSysUserStateByUserIds">
+        UPDATE t_sys_user set user_status = #{agentStatus} WHERE id IN
+        <foreach collection="agentIds" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </update>
+
+    <select id="findSysUserDetailPage" parameterType="sysUser" resultType="com.yarns.december.entity.system.vo.SysUserPageVo">
+        SELECT
+            id,
+            username,
+            nickname,
+            mobile,
+            `backup`,
+            delete_status,
+            create_time,
+            update_time,
+            version
+        FROM
+            t_sys_user
+        WHERE
+            1 = 1
+            <if test="sysUser.username != null and sysUser.username != ''">
+                AND username LIKE CONCAT('%',#{sysUser.username},'%')
+            </if>
+            <if test="sysUser.nickname != null and sysUser.nickname != ''">
+                AND nickname LIKE CONCAT('%',#{sysUser.nickname},'%')
+            </if>
+            <if test="sysUser.mobile != null and sysUser.mobile != ''">
+                AND mobile LIKE CONCAT('%',#{sysUser.mobile},'%')
+            </if>
+        ORDER BY
+            id DESC
+    </select>
+    <select id="getUserByAgentWorker" resultType="com.yarns.december.entity.base.vo.EnumsVo">
+        SELECT
+            u.id,
+            u.nickname `name`
+        FROM
+            `t_sys_user` u
+                JOIN t_sys_user_role ur ON u.id = ur.user_id
+                JOIN t_sys_role r ON ur.role_id = r.id
+        WHERE
+            r.role_token = 'agentWorker'
+          <if test="mobileOrUsername != null and mobileOrUsername != ''">
+              AND (u.mobile LIKE CONCAT('%',#{mobileOrUsername},'%') OR
+                   u.nickname LIKE CONCAT('%',#{mobileOrUsername},'%'))
+          </if>
+          AND u.id NOT IN (
+            SELECT
+                ai.user_id
+            FROM
+                t_agent_info ai
+            WHERE ai.parent_id != 0)
+    </select>
+    <select id="getUserByAgent" resultType="com.yarns.december.entity.base.vo.EnumsVo">
+        SELECT
+            u.id,
+            u.nickname `name`
+        FROM
+            `t_sys_user` u
+            JOIN t_sys_user_role ur ON u.id = ur.user_id
+            JOIN t_sys_role r ON ur.role_id = r.id
+        WHERE
+            r.role_token = 'agent'
+        <if test="mobileOrUsername != null and mobileOrUsername != ''">
+            AND (u.mobile LIKE CONCAT('%',#{mobileOrUsername},'%') OR
+            u.nickname LIKE CONCAT('%',#{mobileOrUsername},'%'))
+        </if>
+        AND u.id NOT IN (
+            SELECT
+            ai.user_id
+            FROM
+            t_agent_info ai)
+    </select>
+</mapper>

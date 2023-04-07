@@ -67,7 +67,7 @@ public class ControllerEndpointAspect extends AspectSupport {
         } catch (Throwable throwable) {
             initChildException(throwable);
             throwable.printStackTrace();
-            String exceptionMessage = annotation.exceptionMessage();
+            String exceptionMessage = annotation.operation()+ "出现错误";
             String message = throwable.getMessage();
             String error;
             if (message != null) {

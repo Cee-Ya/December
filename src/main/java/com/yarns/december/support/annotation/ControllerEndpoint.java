@@ -13,5 +13,4 @@ import java.lang.annotation.Target;
 public @interface ControllerEndpoint {
 
     String operation() default "";
-    String exceptionMessage() default "后台出错了";
 }

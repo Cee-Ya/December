@@ -1,17 +1,11 @@
 package com.yarns.december.support.utils;
 
-import com.yarns.december.support.constant.Constant;
-import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.lionsoul.ip2region.DataBlock;
-import org.lionsoul.ip2region.DbConfig;
-import org.lionsoul.ip2region.DbSearcher;
+import org.lionsoul.ip2region.xdb.Searcher;
 
-import java.io.File;
-import java.io.InputStream;
-import java.lang.reflect.Method;
+import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author Yarns
@@ -21,28 +15,36 @@ import java.lang.reflect.Method;
 @Slf4j
 public class AddressUtils {
     public static String getCityInfo(String ip) {
+        String dbPath = Objects.requireNonNull(AddressUtils.class.getResource("/ip2region/ip2region.xdb")).getPath();
+        // 1、从 dbPath 中预先加载 VectorIndex 缓存，并且把这个得到的数据作为全局变量，后续反复使用。
+        byte[] vIndex;
         try {
-            String dbPath = AddressUtils.class.getResource("/ip2region/ip2region.db").getPath();
-            File file = new File(dbPath);
-            if (!file.exists()) {
-                String tmpDir = System.getProperties().getProperty(Constant.JAVA_TEMP_DIR);
-                dbPath = tmpDir + "ip.db";
-                file = new File(dbPath);
-                InputStream resourceAsStream = AddressUtils.class.getClassLoader().getResourceAsStream("classpath:ip2region/ip2region.db");
-                if (resourceAsStream != null) {
-                    FileUtils.copyInputStreamToFile(resourceAsStream, file);
-                }
-            }
-            DbConfig config = new DbConfig();
-            @Cleanup
-            DbSearcher searcher = new DbSearcher(config, file.getPath());
-            Method method = searcher.getClass().getMethod("btreeSearch", String.class);
-            DataBlock dataBlock = (DataBlock) method.invoke(searcher, ip);
-            log.info(dataBlock.getRegion());
-            return dataBlock.getRegion();
+            vIndex = Searcher.loadVectorIndexFromFile(dbPath);
         } catch (Exception e) {
-            log.warn("获取地址信息异常,{}", e.getMessage());
+            System.out.printf("failed to load vector index from `%s`: %s\n", dbPath, e);
             return StringUtils.EMPTY;
         }
+
+        // 2、使用全局的 vIndex 创建带 VectorIndex 缓存的查询对象。
+        Searcher searcher;
+        try {
+            searcher = Searcher.newWithVectorIndex(dbPath, vIndex);
+        } catch (Exception e) {
+            System.out.printf("failed to create vectorIndex cached searcher with `%s`: %s\n", dbPath, e);
+            return StringUtils.EMPTY;
+        }
+
+        // 3、查询
+        try {
+            long sTime = System.nanoTime();
+            String region = searcher.search(ip);
+            long cost = TimeUnit.NANOSECONDS.toMicros(System.nanoTime() - sTime);
+            System.out.printf("{region: %s, ioCount: %d, took: %d μs}\n", region, searcher.getIOCount(), cost);
+            return region;
+        } catch (Exception e) {
+            System.out.printf("failed to search(%s): %s\n", ip, e);
+        }
+        return StringUtils.EMPTY;
     }
+
 }
