@@ -47,11 +47,6 @@ public class MvcConfigure implements WebMvcConfigurer {
         //路由拦截器
         registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin())).addPathPatterns(EndpointConstant.ALL)
                 .excludePathPatterns(EndpointConstant.OAUTH_LOGIN,"/generator/zip");
-
-        //注解拦截器
-        registry.addInterceptor(new SaInterceptor())
-                .excludePathPatterns(EndpointConstant.OAUTH_LOGIN,
-                        "/generator/zip");
     }
 
     /**
