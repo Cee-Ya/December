@@ -6,8 +6,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yarns.december.support.helper.RedisHelper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -37,6 +42,14 @@ import java.time.Duration;
 public class LettuceRedisConfigure extends CachingConfigurerSupport {
 
     private final LettuceConnectionFactory lettuceConnectionFactory;
+    @Value("${spring.redis.host}")
+    private String host;
+
+    @Value("${spring.redis.port}")
+    private String port;
+
+    @Value("${spring.redis.password}")
+    private String redisPassword;
 
     /**
      * 重写spring的缓存管理
@@ -128,5 +141,22 @@ public class LettuceRedisConfigure extends CachingConfigurerSupport {
     @ConditionalOnBean(name = "redisTemplate")
     public RedisHelper redisHelper() {
         return new RedisHelper();
+    }
+
+
+    @Bean
+    public RedissonClient getRedisson(){
+        Config config = new Config();
+        //单机模式  依次设置redis地址和密码
+        config.useSingleServer().
+                setAddress("redis://" + host + ":" + port).
+                setPassword(redisPassword);
+        return Redisson.create(config);
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public RedisLock redisLock(RedissonClient redissonClient) {
+        return new RedisLock(redissonClient);
     }
 }
