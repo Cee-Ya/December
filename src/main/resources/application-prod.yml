@@ -1,0 +1,64 @@
+server:
+  port: 2323
+  undertow:
+    max-http-post-size: 0
+    # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
+    # 每块buffer的空间大小,越小的空间被利用越充分
+    buffer-size: 1024
+    # 每个区分配的buffer数量 , 所以pool的大小是buffer-size * buffers-per-region
+    #   buffers-per-region: 1024 # 这个参数不需要写了
+    # 是否分配的直接内存
+    direct-buffers: true
+
+spring:
+  datasource:
+    dynamic:
+      #开启mybatis sql日志打印 生产环境注意 此处会带来一定性能损耗
+      p6spy: true
+      hikari:
+        connection-timeout: 30000
+        max-lifetime: 30000
+        max-pool-size: 15
+        min-idle: 5
+        connection-test-query: select 1
+      primary: base
+      datasource:
+        base:
+          username: root
+          password: 5aIXUixDs3%jMHIx
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://192.168.13.189:3306/december?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8&zeroDateTimeBehavior=convertToNull
+  # redis数据库
+  redis:
+    database: 0
+    host: 192.168.13.189
+    port: 6379
+    password: 111111
+    lettuce:
+      pool:
+        min-idle: 8
+        max-idle: 500
+        max-active: 2000
+        max-wait: 10000s
+    timeout: 5000s
+#  ####################################
+#  ############mq配置#################
+#  ####################################
+  rabbitmq:
+    host: 192.168.13.189
+    port: 5672
+    username: guest
+    password: guest
+    publisher-returns: true # 触发路由失败消息的回调(用不上)
+    publisher-confirm-type: correlated  # 用来配置消息发送到交换器之后是否触发回调方法
+    listener:
+      simple:
+        #  采用手动应答
+        acknowledge-mode: manual
+        #  当前监听容器数
+        concurrency: 1
+        #  最大数
+        max-concurrency: 1
+        #  是否支持重试
+        retry:
+          enabled: true

@@ -73,7 +73,7 @@ public class LettuceRedisConfigure extends CachingConfigurerSupport {
             for (Object obj : objects) {
                 sb.append(obj.toString());
             }
-            log.info("keyGenerator=" + sb.toString());
+            log.info("keyGenerator=" + sb);
             return sb.toString();
         };
     }

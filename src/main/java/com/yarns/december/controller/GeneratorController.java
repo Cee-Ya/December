@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +36,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("generator")
 @RequiredArgsConstructor
-public class GeneratorController {
+public class GeneratorController implements InitializingBean {
 
     private static final String SUFFIX = "_code.zip";
 
@@ -43,8 +44,8 @@ public class GeneratorController {
     private final GeneratorConfigService generatorConfigService;
     private final GeneratorHelper generatorHelper;
 
-    @PostConstruct
-    public void printInit(){
+    @Override
+    public void afterPropertiesSet() throws Exception {
         log.warn("代码生成使用的数据库为【{}】", GeneratorConstant.DATABASE_NAME);
     }
 
