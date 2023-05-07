@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yarns.december.support.helper.RedisHelper;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.Redisson;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -36,20 +39,19 @@ import java.time.Duration;
  * @author Yarns
  */
 @Slf4j
+@Data
 @Configuration
 @EnableCaching
 @RequiredArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@ConfigurationProperties(prefix = "spring.redis")
 public class LettuceRedisConfigure extends CachingConfigurerSupport {
-
     private final LettuceConnectionFactory lettuceConnectionFactory;
-    @Value("${spring.redis.host}")
+
+
     private String host;
-
-    @Value("${spring.redis.port}")
     private String port;
-
-    @Value("${spring.redis.password}")
-    private String redisPassword;
+    private String password;
 
     /**
      * 重写spring的缓存管理
@@ -150,7 +152,7 @@ public class LettuceRedisConfigure extends CachingConfigurerSupport {
         //单机模式  依次设置redis地址和密码
         config.useSingleServer().
                 setAddress("redis://" + host + ":" + port).
-                setPassword(redisPassword);
+                setPassword(password);
         return Redisson.create(config);
     }
 

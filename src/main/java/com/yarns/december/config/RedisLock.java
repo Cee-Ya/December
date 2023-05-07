@@ -9,6 +9,9 @@ import org.redisson.api.RedissonClient;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 分布式锁配置
+ */
 @Slf4j
 @RequiredArgsConstructor
 public class RedisLock {
