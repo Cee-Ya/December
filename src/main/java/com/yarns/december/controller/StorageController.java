@@ -29,7 +29,7 @@ public class StorageController {
      * @return Map<String,String>
      */
     @GetMapping("signature")
-    public CommonResult<Map<String,String>> getSignature() throws Exception {
+    public CommonResult<Map<String,Object>> getSignature() throws Exception {
         return CommonResult.ok().setResult(storageService.getSignature());
     }
 

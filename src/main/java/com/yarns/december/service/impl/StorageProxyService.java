@@ -31,7 +31,7 @@ public class StorageProxyService implements StorageService, InitializingBean {
     }
 
     @Override
-    public Map<String, String> getSignature() throws Exception {
+    public Map<String, Object> getSignature() throws Exception {
         return storageService.getSignature();
     }
 }

@@ -6,6 +6,7 @@ import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.MatchMode;
 import com.aliyun.oss.model.PolicyConditions;
+import com.google.common.collect.Maps;
 import com.yarns.december.service.StorageFactory;
 import com.yarns.december.service.StorageService;
 import com.yarns.december.service.SysParamsService;
@@ -17,11 +18,12 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
 import java.sql.Date;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
  * 阿里云存储实现类
+ * @apiNote 其实不需要用bean的方式实现，直接使用实例也行，至于sysParamsService怎么获取，
+ *          直接使用SpringContextUtil.getBean(SysParamsService.class)也行
  * @author Yarns
  */
 @Service
@@ -49,7 +51,7 @@ public class AliyunStorageServiceImpl implements StorageService, InitializingBea
                  this.accessId, sysParamsService.getSysParamsValueByKey(Constant.Storage.ACCESS_KEY));
     }
     @Override
-    public Map<String, String> getSignature() throws Exception {
+    public Map<String, Object> getSignature() throws Exception {
         long expireTime = 30;
         long expireEndTime = System.currentTimeMillis() + expireTime * 1000;
         Date expiration = new Date(expireEndTime);
@@ -61,13 +63,14 @@ public class AliyunStorageServiceImpl implements StorageService, InitializingBea
         byte[] binaryData = postPolicy.getBytes(StandardCharsets.UTF_8);
         String encodedPolicy = BinaryUtil.toBase64String(binaryData);
         String postSignature = oss.calculatePostSignature(postPolicy);
-        Map<String, String> respMap = new LinkedHashMap<String, String>();
+        Map<String, Object> respMap = Maps.newLinkedHashMapWithExpectedSize(7);
         respMap.put("accessid",accessId);
         respMap.put("policy", encodedPolicy);
         respMap.put("signature", postSignature);
         respMap.put("dir", dir);
         respMap.put("host", host);
         respMap.put("expire", String.valueOf(expireEndTime / 1000));
+        // todo 目前不支持回调
         if(StringUtils.isNotBlank(callbackUrl)){
             JSONObject jasonCallback = new JSONObject();
             jasonCallback.put("callbackUrl", callbackUrl);

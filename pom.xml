@@ -191,11 +191,19 @@
             <artifactId>spring-security-crypto</artifactId>
         </dependency>
 
+        <!--阿里云oss sdk-->
         <dependency>
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
             <version>3.16.1</version>
             <scope>compile</scope>
+        </dependency>
+
+        <!--腾讯云cos sdk-->
+        <dependency>
+            <groupId>com.qcloud</groupId>
+            <artifactId>cos-sts_api</artifactId>
+            <version>3.1.1</version>
         </dependency>
     </dependencies>
 
