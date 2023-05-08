@@ -99,7 +99,6 @@ public class GeneratorController implements InitializingBean {
             }
             generatorConfig.setTableComment(comment);
         }
-        generatorConfig.setTableComment(remark);
         // 生成代码到临时目录
         List<Column> columns = generatorService.getColumns(GeneratorConstant.DATABASE_TYPE, databaseName, name);
         generatorHelper.generateEntityFile(columns, generatorConfig);

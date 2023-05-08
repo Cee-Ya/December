@@ -41,16 +41,12 @@ public class ${className} {
     private String ${column.field?uncap_first};
 
     </#if>
-    <#if column.type = 'timestamp' || column.type = 'date' || column.type = 'datetime'||column.type = 'TIMESTAMP' || column.type = 'DATE' || column.type = 'DATETIME'>
-    private Date ${column.field?uncap_first};
-
-    </#if>
     <#if column.type = 'int' || column.type = 'smallint'>
     private Integer ${column.field?uncap_first};
 
     </#if>
     <#if column.type = 'double'>
-        private Double ${column.field?uncap_first};
+    private Double ${column.field?uncap_first};
 
     </#if>
     <#if column.type = 'bigint'>
@@ -63,6 +59,11 @@ public class ${className} {
     </#if>
     <#if column.type = 'decimal' || column.type = 'numeric'>
     private BigDecimal ${column.field?uncap_first};
+
+    </#if>
+    <#if column.type = 'timestamp' || column.type = 'date' || column.type = 'datetime'||column.type = 'TIMESTAMP' || column.type = 'DATE' || column.type = 'DATETIME'>
+    private Date ${column.field?uncap_first};
+
     </#if>
         </#list>
     </#if>
