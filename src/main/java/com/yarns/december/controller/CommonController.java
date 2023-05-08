@@ -1,0 +1,65 @@
+package com.yarns.december.controller;
+
+import com.yarns.december.entity.base.CommonResult;
+import com.yarns.december.support.utils.FileUtil;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+
+/**
+ * 公共接口
+ * @author Yarns
+ */
+@Validated
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("common")
+@SuppressWarnings("unchecked")
+public class CommonController {
+    @Value("${december.upload.path}")
+    private String path;
+    @Value("${december.upload.max-size}")
+    private String maxSize;
+    @Value("${december.upload.url}")
+    private String url;
+
+    /**
+     * 上传文件
+     * @param file
+     * @return
+     */
+    @PostMapping("upload")
+    public CommonResult<String> upload(MultipartFile file){
+        // 校验文件
+        if (file.isEmpty()) {
+            return CommonResult.fail("上传文件不能为空");
+        }
+        //文件大小是否超过限制
+        if (FileUtil.checkFileSize(file, maxSize)) {
+            return CommonResult.fail("上传文件大小不能超过" + maxSize);
+        }
+        String fileName = FileUtil.getDateFileName(file.getOriginalFilename());
+        // 判断文件夹是否存在
+        String folderPath = FileUtil.getFolderByType(fileName,path);
+        File folder = new File(folderPath);
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        // 保存文件
+        File dest = new File(folderPath + fileName);
+        try {
+            file.transferTo(dest);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return CommonResult.fail("上传失败");
+        }
+        return CommonResult.ok().setResult(url+FileUtil.getFolderByType(fileName,"")+fileName);
+    }
+
+}

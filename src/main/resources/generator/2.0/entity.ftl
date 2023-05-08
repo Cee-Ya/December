@@ -6,6 +6,7 @@ import java.util.Date;
 <#if hasBigDecimal = true>
 import java.math.BigDecimal;
 </#if>
+import java.io.Serializable;
 
 import lombok.Data;
 import org.apache.ibatis.type.Alias;
@@ -23,7 +24,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @Data
 @TableName("${tableName}")
 @Alias("${className?uncap_first}")
-public class ${className} {
+public class ${className} implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     <#if columns??>
         <#list columns as column>

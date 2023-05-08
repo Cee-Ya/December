@@ -62,3 +62,15 @@ spring:
         #  是否支持重试
         retry:
           enabled: true
+
+#  ####################################
+#  #############项目配置################
+#  ####################################
+december:
+  upload:
+    # 上传文件的根路径
+    path: /opt/december/upload/
+    # 上传文件的最大大小
+    max-size: 10MB
+    # 上传文件的资源路径 用于访问 最好使用nginx配置
+    url: http://test.miaow.ml/upload/
