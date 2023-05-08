@@ -58,6 +58,7 @@ public class SysUser {
      * 删除状态(0 未删除 1已删除)
      */
     @TableField(value = "delete_status",fill = FieldFill.INSERT)
+    @TableLogic
     private Integer deleteStatus;
 
     /**
