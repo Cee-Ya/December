@@ -29,5 +29,5 @@ public class BaseResult<T> implements Serializable {
     /**
      * 时间戳
      */
-    private String timestamp;
+    private Long timestamp;
 }

@@ -19,4 +19,6 @@ public interface GeneratorMapper {
     IPage<Table> getTables(Page page, @Param("tableName") String tableName, @Param("databaseType") String databaseType, @Param("schemaName") String schemaName);
 
     List<Column> getColumns(@Param("databaseType") String databaseType, @Param("schemaName") String schemaName, @Param("tableName") String tableName);
+
+    String getTableComment(@Param("databaseType") String databaseType, @Param("schemaName") String databaseName, @Param("tableName") String name);
 }

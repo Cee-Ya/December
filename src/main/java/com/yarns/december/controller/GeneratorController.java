@@ -90,6 +90,15 @@ public class GeneratorController implements InitializingBean {
         }
         generatorConfig.setTableName(name);
         generatorConfig.setClassName(CommonUtils.underscoreToCamel(className));
+        if(StringUtils.isNotBlank(remark)) {
+            generatorConfig.setTableComment(remark);
+        }else {
+            String comment = generatorService.getTableComment(GeneratorConstant.DATABASE_TYPE, databaseName, name);
+            if(StringUtils.isBlank(comment)) {
+                comment = name;
+            }
+            generatorConfig.setTableComment(comment);
+        }
         generatorConfig.setTableComment(remark);
         // 生成代码到临时目录
         List<Column> columns = generatorService.getColumns(GeneratorConstant.DATABASE_TYPE, databaseName, name);

@@ -17,4 +17,6 @@ public interface GeneratorService {
     IPage<Table> getTables(String tableName, QueryRequest request, String databaseType, String schemaName);
 
     List<Column> getColumns(String databaseType, String schemaName, String tableName);
+
+    String getTableComment(String databaseType, String databaseName, String name);
 }

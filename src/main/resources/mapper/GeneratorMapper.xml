@@ -21,6 +21,7 @@
         <if test="tableName != null and tableName != ''">
             AND TABLE_NAME = #{tableName}
         </if>
+        ORDER BY CREATE_TIME DESC
     </select>
 
     <!--查询数据库表下面的列属性-->
@@ -36,6 +37,14 @@
         COLUMN_COMMENT remark
         FROM information_schema.COLUMNS
         WHERE TABLE_SCHEMA = #{schemaName} AND TABLE_NAME = #{tableName}
+    </select>
+    <select id="getTableComment" resultType="java.lang.String">
+        SELECT
+        TABLE_COMMENT
+        FROM
+        information_schema.TABLES
+        WHERE
+        TABLE_SCHEMA = #{schemaName} AND TABLE_NAME = #{tableName}
     </select>
 
 </mapper>

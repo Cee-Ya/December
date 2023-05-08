@@ -3,6 +3,12 @@
 <mapper namespace="${basePackage}.${mapperPackage}.${className}Mapper">
 
     <select id="find${className}DetailPage" parameterType="${className?uncap_first}" resultType="${className?uncap_first}">
-        SELECT * FROM ${tableName} WHERE 1=1  order by id desc
+        SELECT
+        <#if columns??>
+            <#list columns as column>
+            ${column.name} as ${column.field?uncap_first}<#if column_has_next>,</#if>
+            </#list>
+        </#if>
+        FROM ${tableName} WHERE 1=1  order by id desc
     </select>
 </mapper>

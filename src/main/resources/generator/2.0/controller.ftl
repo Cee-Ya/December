@@ -47,7 +47,7 @@ public class ${className}Controller {
      * @return
      */
     @PostMapping
-    @ControllerEndpoint(operation = "新增${tableComment}", exceptionMessage = "新增${tableComment}失败")
+    @ControllerEndpoint(operation = "新增${tableComment}")
     public CommonResult add${className}(@Valid @RequestBody ${className} ${className?uncap_first}) {
         this.${className?uncap_first}Service.create${className}(${className?uncap_first});
         return CommonResult.ok();
@@ -59,7 +59,7 @@ public class ${className}Controller {
      * @return
      */
     @PutMapping
-    @ControllerEndpoint(operation = "修改${tableComment}", exceptionMessage = "修改${tableComment}失败")
+    @ControllerEndpoint(operation = "修改${tableComment}")
     public CommonResult update${className}(@Valid @RequestBody ${className} ${className?uncap_first}) {
         this.${className?uncap_first}Service.update${className}(${className?uncap_first});
         return CommonResult.ok();
@@ -71,7 +71,7 @@ public class ${className}Controller {
      * @return
      */
     @DeleteMapping
-    @ControllerEndpoint(operation = "删除${tableComment}", exceptionMessage = "删除${tableComment}失败")
+    @ControllerEndpoint(operation = "删除${tableComment}")
     public CommonResult delete${className}s(@NotBlank(message = "{required}") String ${className?uncap_first}Ids) {
         String[] ids = ${className?uncap_first}Ids.split(StringPool.COMMA);
         this.${className?uncap_first}Service.delete${className}s(ids);

@@ -33,7 +33,7 @@ public class CommonResult<T> extends BaseResult implements Serializable {
         result.setCode(code);
         result.setSuccess(success);
         result.setMessage(msg);
-        result.setTimestamp(String.valueOf(System.currentTimeMillis()));
+        result.setTimestamp(System.currentTimeMillis());
         return result;
     }
 

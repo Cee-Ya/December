@@ -42,7 +42,7 @@ public class GeneratorHelper {
     @Setter
     private String version;
     public void generateEntityFile(List<Column> columns, GeneratorConfig configure) throws Exception {
-        version = configure.getVersion();
+        this.setVersion(configure.getVersion());
         String suffix = GeneratorConstant.JAVA_FILE_SUFFIX;
         String path = getFilePath(configure, configure.getEntityPackage(), suffix, false);
         String templateName = GeneratorConstant.ENTITY_TEMPLATE;

@@ -15,7 +15,7 @@ public class ResponseBo extends HashMap<String, Object> implements Serializable 
 
     public ResponseBo() {
         this.put("success", true);
-        this.put("timestamp", String.valueOf(System.currentTimeMillis()));
+        this.put("timestamp", System.currentTimeMillis());
     }
 
     public static ResponseBo cus(Integer code, String message) {
