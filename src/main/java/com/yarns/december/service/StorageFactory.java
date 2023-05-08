@@ -11,10 +11,6 @@ import java.util.Map;
 public class StorageFactory {
     private static Map<String,StorageService> storageServiceMap = Maps.newHashMapWithExpectedSize(3);
 
-    public static int getStorageServiceMapSize() {
-        return storageServiceMap.size();
-    }
-
     /**
      * 注册到工厂
      * @param type
