@@ -1,7 +1,7 @@
 package ${basePackage}.${entityPackage};
 
 <#if hasDate = true>
-import java.util.Date;
+import java.time.LocalDateTime;
 </#if>
 <#if hasBigDecimal = true>
 import java.math.BigDecimal;
@@ -68,7 +68,7 @@ public class ${className} implements Serializable {
 
     </#if>
     <#if column.type = 'timestamp' || column.type = 'date' || column.type = 'datetime'||column.type = 'TIMESTAMP' || column.type = 'DATE' || column.type = 'DATETIME'>
-    private Date ${column.field?uncap_first};
+    private LocalDateTime ${column.field?uncap_first};
 
     </#if>
         </#list>
