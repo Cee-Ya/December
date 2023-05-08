@@ -1,5 +1,5 @@
 {
-  "serverUrl": "http://api.yarns.top",
+  "serverUrl": "http://api.xxx.com",
   "allInOne": true,
   "allInOneDocFileName": "index.html",
   "coverOld": true,
@@ -11,9 +11,9 @@
   "showAuthor": true,
   "appToken": "9c6efbe0efe345a7baf2f94b538ce733",
   "isReplace": true,
-  "openUrl": "http://api.yarns.top/api",
+  "openUrl": "http://api.xxx.com/api",
   "debugEnvName": "测试环境",
-  "debugEnvUrl": "http://test.3306.run/api/admin",
+  "debugEnvUrl": "http://test.xxx.com/api/admin",
   "tornaDebug": false,
   "requestHeaders": [
     {
