@@ -1,5 +1,6 @@
 package com.yarns.december.controller;
 
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.yarns.december.entity.base.QueryRequest;
 import com.yarns.december.entity.base.ResponseBo;
 import com.yarns.december.entity.generator.Column;
@@ -16,11 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -38,6 +39,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class GeneratorController implements InitializingBean {
 
+    @Value("${spring.datasource.dynamic.datasource.base.url}")
+    private String databaseName;
+    private String databaseType;
+
     private static final String SUFFIX = "_code.zip";
 
     private final GeneratorService generatorService;
@@ -46,7 +51,11 @@ public class GeneratorController implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        log.warn("代码生成使用的数据库为【{}】", GeneratorConstant.DATABASE_NAME);
+        // 初始化数据库类型 jdbc:mysql://192.168.13.189:3306/december?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8&zeroDateTimeBehavior=convertToNull
+        databaseType = databaseName.split(StringPool.COLON)[1];
+        // 初始化数据库名称
+        databaseName = RegExUtils.replacePattern(databaseName, ".*/|\\?.*", "");
+        log.warn("代码生成使用的数据库类型为【{}】- 数据库名称为【{}】",databaseType, databaseName);
     }
 
     /**
@@ -57,7 +66,7 @@ public class GeneratorController implements InitializingBean {
      */
     @GetMapping("tables")
     public ResponseBo tablesInfo(String tableName, QueryRequest request) {
-        Map<String, Object> dataTable = CommonUtils.getDataTable(generatorService.getTables(tableName, request, GeneratorConstant.DATABASE_TYPE, GeneratorConstant.DATABASE_NAME));
+        Map<String, Object> dataTable = CommonUtils.getDataTable(generatorService.getTables(tableName, request, GeneratorConstant.DATABASE_TYPE, databaseName));
         return ResponseBo.result(dataTable);
     }
 
@@ -83,7 +92,7 @@ public class GeneratorController implements InitializingBean {
         generatorConfig.setClassName(CommonUtils.underscoreToCamel(className));
         generatorConfig.setTableComment(remark);
         // 生成代码到临时目录
-        List<Column> columns = generatorService.getColumns(GeneratorConstant.DATABASE_TYPE, GeneratorConstant.DATABASE_NAME, name);
+        List<Column> columns = generatorService.getColumns(GeneratorConstant.DATABASE_TYPE, databaseName, name);
         generatorHelper.generateEntityFile(columns, generatorConfig);
         generatorHelper.generateMapperFile(columns, generatorConfig);
         generatorHelper.generateMapperXmlFile(columns, generatorConfig);
