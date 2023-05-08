@@ -76,9 +76,9 @@ public class SysParamsServiceImpl extends ServiceImpl<SysParamsMapper, SysParams
         }
         SysParams sysParams = this.getParkParamsValueByKey(key);
         //只返回系统参数
-        if(sysParams != null && sysParams.getParamsValue() != null && sysParams.getSystemParamFlag() == 1){
-            redisHelper.set(cacheKey,sysParams.getParamsValue(), Constant.Redis.EXPIRE_TIME);
-            return sysParams.getParamsValue();
+        if(sysParams != null && sysParams.getParamValue() != null && sysParams.getSystemParamFlag() == 1){
+            redisHelper.set(cacheKey,sysParams.getParamValue(), Constant.Redis.EXPIRE_TIME);
+            return sysParams.getParamValue();
         }
         return null;
     }

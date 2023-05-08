@@ -52,8 +52,8 @@ public class SysParams implements Serializable {
     /**
      * 参数值
      */
-    @TableField("params_value")
-    private String paramsValue;
+    @TableField("param_value")
+    private String paramValue;
 
     /**
      * 
