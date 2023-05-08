@@ -43,17 +43,17 @@ public class AliyunStorageServiceImpl implements StorageService, InitializingBea
          StorageFactory.register(Constant.StorageType.ALI,this);
 
          // 从数据库中读取相关配置
-         this.accessId = sysParamsService.getSysParamsValueByKey(Constant.Storage.ACCESS_ID);
-         this.dir = sysParamsService.getSysParamsValueByKey(Constant.Storage.DIR);
-         this.callbackUrl = sysParamsService.getSysParamsValueByKey(Constant.Storage.CALLBACK_URL);
-         String host = sysParamsService.getSysParamsValueByKey(Constant.Storage.HOST);
+         this.accessId = sysParamsService.getSystemParamsValueByKey(Constant.Storage.ACCESS_ID);
+         this.dir = sysParamsService.getSystemParamsValueByKey(Constant.Storage.DIR);
+         this.callbackUrl = sysParamsService.getSystemParamsValueByKey(Constant.Storage.CALLBACK_URL);
+         String host = sysParamsService.getSystemParamsValueByKey(Constant.Storage.HOST);
          if(StringUtils.isBlank(host)){
-             this.host = "http://" + sysParamsService.getSysParamsValueByKey(Constant.Storage.BUCKET) + "." + sysParamsService.getSysParamsValueByKey(Constant.Storage.ENDPOINT);
+             this.host = "http://" + sysParamsService.getSystemParamsValueByKey(Constant.Storage.BUCKET) + "." + sysParamsService.getSystemParamsValueByKey(Constant.Storage.ENDPOINT);
          }else{
              this.host = host;
          }
-         oss = new OSSClientBuilder().build(sysParamsService.getSysParamsValueByKey(Constant.Storage.ENDPOINT),
-                 this.accessId, sysParamsService.getSysParamsValueByKey(Constant.Storage.ACCESS_KEY));
+         oss = new OSSClientBuilder().build(sysParamsService.getSystemParamsValueByKey(Constant.Storage.ENDPOINT),
+                 this.accessId, sysParamsService.getSystemParamsValueByKey(Constant.Storage.ACCESS_KEY));
     }
     @Override
     public Map<String, Object> getSignature() throws Exception {

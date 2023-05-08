@@ -39,16 +39,16 @@ public class TencentStorageServiceImpl implements StorageService, InitializingBe
     public Map<String, Object> getSignature() throws Exception {
         TreeMap<String, Object> config = new TreeMap<>();
         // 云 api 密钥 SecretId
-        config.put("secretId", sysParamsService.getSysParamsValueByKey(Constant.Storage.ACCESS_ID));
+        config.put("secretId", sysParamsService.getSystemParamsValueByKey(Constant.Storage.ACCESS_ID));
         // 云 api 密钥 SecretKey
-        config.put("secretKey", sysParamsService.getSysParamsValueByKey(Constant.Storage.ACCESS_KEY));
+        config.put("secretKey", sysParamsService.getSystemParamsValueByKey(Constant.Storage.ACCESS_KEY));
         // 临时密钥有效时长，单位是秒
         config.put("durationSeconds", 1800);
         // 换成你的 bucket
-        String bucket = sysParamsService.getSysParamsValueByKey(Constant.Storage.BUCKET);
+        String bucket = sysParamsService.getSystemParamsValueByKey(Constant.Storage.BUCKET);
         config.put("bucket", bucket);
         // 换成 bucket 所在地区
-        String region = sysParamsService.getSysParamsValueByKey(Constant.Storage.ENDPOINT);
+        String region = sysParamsService.getSystemParamsValueByKey(Constant.Storage.ENDPOINT);
         config.put("region", region);
         // 设置域名,可通过此方式设置内网域名
 //        String host = sysParamsService.getSysParamsValueByKey(Constant.Storage.HOST);
@@ -56,7 +56,7 @@ public class TencentStorageServiceImpl implements StorageService, InitializingBe
 //            config.put("host", host);
 //        }
         // 设置允许的路径前缀
-        String dir = sysParamsService.getSysParamsValueByKey(Constant.Storage.DIR);
+        String dir = sysParamsService.getSystemParamsValueByKey(Constant.Storage.DIR);
         // 可以通过 allowPrefixes 指定前缀数组, 例子： a.jpg 或者 a/* 或者 * (使用通配符*存在重大安全风险, 请谨慎评估使用)
         config.put("allowPrefixes", new String[] {dir+"/*"});
 
