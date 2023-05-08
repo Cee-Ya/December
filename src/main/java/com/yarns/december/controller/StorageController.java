@@ -1,9 +1,11 @@
 package com.yarns.december.controller;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import com.yarns.december.entity.base.CommonResult;
 import com.yarns.december.service.impl.StorageProxyService;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +21,11 @@ import java.util.Map;
 @Validated
 @RestController
 @RequestMapping("storage")
-@RequiredArgsConstructor
+@DependsOn({"aliyunStorageService","tencentStorageService"})
+@AllArgsConstructor
 @SuppressWarnings("unchecked")
 public class StorageController {
+
     private final StorageProxyService storageService;
 
     /**
@@ -29,6 +33,7 @@ public class StorageController {
      * @return Map<String,String>
      */
     @GetMapping("signature")
+    @SaIgnore
     public CommonResult<Map<String,Object>> getSignature() throws Exception {
         return CommonResult.ok().setResult(storageService.getSignature());
     }

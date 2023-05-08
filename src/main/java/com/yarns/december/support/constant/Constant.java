@@ -1,7 +1,10 @@
 package com.yarns.december.support.constant;
 
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
+
 /**
  * 系统常量
+ *
  * @author Yarns
  */
 public interface Constant {
@@ -129,18 +132,22 @@ public interface Constant {
          */
         String[] VALID_FILE_TYPE = {"xlsx", "zip"};
     }
-
-    interface Storage {
-        String TYPE = "type";
-        String ACCESS_ID = "accessKeyId";
-        String ACCESS_KEY = "accessKeySecret";
-        String ENDPOINT = "endpoint";
-        String BUCKET = "bucket";
-        String HOST = "host";
-        String CALLBACK_URL = "callbackUrl";
-        String DIR = "dir";
+    interface StorageType {
+        String ALI = "ali";
+        String TENCENT = "tencent";
     }
 
+    interface Storage {
+        String STORAGE = "storage" + StringPool.DASH;
+        String TYPE = STORAGE + "type";
+        String ACCESS_ID = STORAGE + "accessKeyId";
+        String ACCESS_KEY = STORAGE + "accessKeySecret";
+        String ENDPOINT = STORAGE + "endpoint";
+        String BUCKET = STORAGE + "bucket";
+        String HOST = STORAGE + "host";
+        String CALLBACK_URL = STORAGE + "callbackUrl";
+        String DIR = STORAGE + "dir";
+    }
 
 
 }

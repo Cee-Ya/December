@@ -9,7 +9,7 @@
             name as name,
             system_param_flag as systemParamFlag,
             update_time as updateTime,
-            value as value,
+            params_value as paramsValue,
             version as version
         FROM t_sys_params WHERE 1=1  order by id desc
     </select>

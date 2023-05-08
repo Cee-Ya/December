@@ -1,17 +1,16 @@
 package com.yarns.december.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.yarns.december.entity.base.QueryRequest;
-import com.yarns.december.entity.system.SysParams;
-import com.yarns.december.service.SysParamsService;
-import com.yarns.december.mapper.SysParamsMapper;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.annotation.Propagation;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yarns.december.entity.base.QueryRequest;
+import com.yarns.december.entity.system.SysParams;
+import com.yarns.december.mapper.SysParamsMapper;
+import com.yarns.december.service.SysParamsService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 
@@ -51,6 +50,6 @@ public class SysParamsServiceImpl extends ServiceImpl<SysParamsMapper, SysParams
     @Override
     public String getSysParamsValueByKey(String key) {
         SysParams sysParams = this.baseMapper.selectOne(new LambdaQueryWrapper<SysParams>().eq(SysParams::getName, key));
-        return sysParams == null ? null : sysParams.getValue();
+        return sysParams == null ? null : sysParams.getParamsValue();
     }
 }

@@ -1,7 +1,6 @@
 package com.yarns.december.service;
 
 import com.google.common.collect.Maps;
-import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
@@ -11,6 +10,10 @@ import java.util.Map;
  */
 public class StorageFactory {
     private static Map<String,StorageService> storageServiceMap = Maps.newHashMapWithExpectedSize(3);
+
+    public static int getStorageServiceMapSize() {
+        return storageServiceMap.size();
+    }
 
     /**
      * 注册到工厂

@@ -26,7 +26,7 @@ import java.util.Map;
  *          直接使用SpringContextUtil.getBean(SysParamsService.class)也行
  * @author Yarns
  */
-@Service
+@Service("aliyunStorageService")
 @RequiredArgsConstructor
 public class AliyunStorageServiceImpl implements StorageService, InitializingBean {
     private final SysParamsService sysParamsService;
@@ -40,13 +40,18 @@ public class AliyunStorageServiceImpl implements StorageService, InitializingBea
 
     @Override
     public void afterPropertiesSet() throws Exception {
-         StorageFactory.register(this.getClass().getName(),this);
+         StorageFactory.register(Constant.StorageType.ALI,this);
 
          // 从数据库中读取相关配置
          this.accessId = sysParamsService.getSysParamsValueByKey(Constant.Storage.ACCESS_ID);
          this.dir = sysParamsService.getSysParamsValueByKey(Constant.Storage.DIR);
          this.callbackUrl = sysParamsService.getSysParamsValueByKey(Constant.Storage.CALLBACK_URL);
-         this.host = "http://" + sysParamsService.getSysParamsValueByKey(Constant.Storage.BUCKET) + "." + sysParamsService.getSysParamsValueByKey(Constant.Storage.ENDPOINT);
+         String host = sysParamsService.getSysParamsValueByKey(Constant.Storage.HOST);
+         if(StringUtils.isBlank(host)){
+             this.host = "http://" + sysParamsService.getSysParamsValueByKey(Constant.Storage.BUCKET) + "." + sysParamsService.getSysParamsValueByKey(Constant.Storage.ENDPOINT);
+         }else{
+             this.host = host;
+         }
          oss = new OSSClientBuilder().build(sysParamsService.getSysParamsValueByKey(Constant.Storage.ENDPOINT),
                  this.accessId, sysParamsService.getSysParamsValueByKey(Constant.Storage.ACCESS_KEY));
     }
