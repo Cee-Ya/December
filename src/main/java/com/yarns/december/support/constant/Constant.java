@@ -58,15 +58,19 @@ public interface Constant {
      */
     String UTF8 = "utf-8";
 
-
-    /**
-     * 验证码 key前缀
-     */
-    String CODE_PREFIX = "captcha.";
-
     String LOCALHOST = "localhost";
     String LOCALHOST_IP = "127.0.0.1";
+    interface Redis {
+        /**
+         * 默认缓存过期时间（秒） 全局默认30分钟
+         */
+        long EXPIRE_TIME = 60 * 30;
+        /**
+         * 验证码 key前缀
+         */
+        String CODE_PREFIX = "captcha.";
 
+    }
 
     interface FileConstant {
         /**

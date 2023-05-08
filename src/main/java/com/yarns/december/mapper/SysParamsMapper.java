@@ -1,10 +1,12 @@
 package com.yarns.december.mapper;
 
-import com.yarns.december.entity.system.SysParams;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yarns.december.entity.system.SysParams;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 系统参数表 Mapper
@@ -22,4 +24,10 @@ public interface SysParamsMapper extends BaseMapper<SysParams> {
      * @return IPage<SysParams>
      */
     IPage<SysParams> findSysParamsDetailPage(Page page,@Param("sysParams")  SysParams sysParams);
+
+    /**
+     * 查询需要删除的缓存key
+     * @return
+     */
+    List<String> findDelCacheKeys();
 }
