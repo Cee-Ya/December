@@ -1,5 +1,6 @@
 package com.yarns.december.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.yarns.december.entity.base.QueryRequest;
 import com.yarns.december.entity.system.SysParams;
 import com.yarns.december.service.SysParamsService;
@@ -45,5 +46,11 @@ public class SysParamsServiceImpl extends ServiceImpl<SysParamsMapper, SysParams
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void deleteSysParamss(String[] sysParamsIds) {
         this.removeByIds(Arrays.asList(sysParamsIds));
+    }
+
+    @Override
+    public String getSysParamsValueByKey(String key) {
+        SysParams sysParams = this.baseMapper.selectOne(new LambdaQueryWrapper<SysParams>().eq(SysParams::getName, key));
+        return sysParams == null ? null : sysParams.getValue();
     }
 }

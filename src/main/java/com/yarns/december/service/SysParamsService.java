@@ -44,4 +44,11 @@ public interface SysParamsService extends IService<SysParams> {
      * @param sysParamsIds 系统参数表 id数组
      */
     void deleteSysParamss(String[] sysParamsIds);
+
+    /**
+     * 根据key获取value
+     * @param key
+     * @return
+     */
+    String getSysParamsValueByKey(String key);
 }
