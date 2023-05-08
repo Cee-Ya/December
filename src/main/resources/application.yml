@@ -77,6 +77,23 @@ sa-token:
   is-log: false
   isPrint: false
 
+# captcha配置
+captcha:
+  # 验证码有效时间，单位秒
+  time: 120
+  # 验证码类型，可选值 png、gif、Arithmetic(目前jdk11以上无法使用)，默认值 png
+  type: png
+  # 验证码图片宽度，单位像素
+  width: 115
+  # 验证码图片高度，单位像素
+  height: 42
+  # 验证码字符长度/算数类型是几位数运算，默认是两位
+  length: 4
+  # 验证码值的类型 1:数字加字母 2:纯数字 3:纯字母
+  charType: 2
+
+
+# mybatis-plus配置
 mybatis-plus:
   type-aliases-package: com.yarns.december.entity.*
   mapper-locations: classpath:mapper/*.xml

@@ -22,6 +22,7 @@ import com.yarns.december.entity.system.vo.SysUserSessionVo;
 import com.yarns.december.service.SysRoleService;
 import com.yarns.december.service.SysUserRoleService;
 import com.yarns.december.service.SysUserService;
+import com.yarns.december.service.impl.ValidateCodeService;
 import com.yarns.december.support.constant.Constant;
 import com.yarns.december.support.exception.BaseException;
 import com.yarns.december.support.utils.CommonUtils;
@@ -53,6 +54,7 @@ public class SysUserAdapter {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final SysRoleService sysRoleService;
     private final ObjectMapper objectMapper;
+    private final ValidateCodeService validateCodeService;
 
     /**
      * 定制化登录
@@ -62,6 +64,8 @@ public class SysUserAdapter {
      * @throws JsonProcessingException
      */
     public String login(LoginBo bo) throws BaseException, JsonProcessingException {
+        // 校验验证码
+        validateCodeService.check(bo.getKey(),bo.getCaptcha());
         val user = sysUserService.getUserByLoginName(bo.getUsername());
         if(user == null){
             log.info("用户名不存在");

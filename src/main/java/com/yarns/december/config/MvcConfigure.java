@@ -46,7 +46,7 @@ public class MvcConfigure implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //路由拦截器
         registry.addInterceptor(new SaInterceptor(handle -> StpUtil.checkLogin())).addPathPatterns(EndpointConstant.ALL)
-                .excludePathPatterns(EndpointConstant.OAUTH_LOGIN,"/generator/zip");
+                .excludePathPatterns(EndpointConstant.OAUTH_LOGIN,"/generator/zip","/common/captcha");
     }
 
     /**

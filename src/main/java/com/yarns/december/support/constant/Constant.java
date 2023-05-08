@@ -81,6 +81,11 @@ public interface Constant {
         String PNG = "png";
 
         /**
+         * 算术类型
+         */
+        String ARITHMETIC = "Arithmetic";
+
+        /**
          * 图片存放的路径
          */
         String STATIC_IMAGES_FOLDER = "images";
