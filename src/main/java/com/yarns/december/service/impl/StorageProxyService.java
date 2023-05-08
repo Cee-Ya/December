@@ -25,7 +25,7 @@ public class StorageProxyService implements StorageService, InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        String type = paramsService.getSysParamsValueByKey(Constant.Storage.TYPE);
+        String type = paramsService.getSystemParamsValueByKey(Constant.Storage.TYPE);
         storageService = StorageFactory.getStorageService(type);
         log.info("初始化【{}】存储服务成功",type);
     }
