@@ -55,7 +55,7 @@ public class GeneratorController implements InitializingBean {
         databaseType = databaseName.split(StringPool.COLON)[1];
         // 初始化数据库名称
         databaseName = RegExUtils.replacePattern(databaseName, ".*/|\\?.*", "");
-        log.warn("代码生成使用的数据库类型为【{}】- 数据库名称为【{}】",databaseType, databaseName);
+        log.info("代码生成使用的数据库类型为【{}】- 数据库名称为【{}】",databaseType, databaseName);
     }
 
     /**

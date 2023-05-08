@@ -74,15 +74,15 @@ public class FileUtil {
      */
     public static String getFolderByType(String fileName,String rootPath){
         if(isImage(fileName)){
-            return rootPath+ Constant.STATIC_IMAGES_FOLDER+StringPool.SLASH;
+            return rootPath+ Constant.FileConstant.STATIC_IMAGES_FOLDER+StringPool.SLASH;
         }else if(isVideo(fileName)){
-            return rootPath+Constant.STATIC_VIDEOS_FOLDER+StringPool.SLASH;
+            return rootPath+Constant.FileConstant.STATIC_VIDEOS_FOLDER+StringPool.SLASH;
         }else if(isOffice(fileName)){
-            return rootPath+Constant.STATIC_OFFICES_FOLDER+StringPool.SLASH;
+            return rootPath+Constant.FileConstant.STATIC_OFFICES_FOLDER+StringPool.SLASH;
         }else if(isAudio(fileName)){
-            return rootPath+Constant.STATIC_AUDIOS_FOLDER+StringPool.SLASH;
+            return rootPath+Constant.FileConstant.STATIC_AUDIOS_FOLDER+StringPool.SLASH;
         }else {
-            return rootPath+Constant.OTHERS_FILES_FOLDER+StringPool.SLASH;
+            return rootPath+Constant.FileConstant.OTHERS_FILES_FOLDER+StringPool.SLASH;
         }
     }
 
@@ -185,7 +185,7 @@ public class FileUtil {
     private static Boolean fileTypeIsValid(String fileType) {
         Preconditions.checkNotNull(fileType);
         fileType = StringUtils.lowerCase(fileType);
-        return ArrayUtils.contains(Constant.VALID_FILE_TYPE, fileType);
+        return ArrayUtils.contains(Constant.FileConstant.VALID_FILE_TYPE, fileType);
     }
 
     private static void compress(File file, ZipOutputStream zipOut, String baseDir) throws IOException {
@@ -237,7 +237,7 @@ public class FileUtil {
      * @return
      */
     public static boolean isImage(String filename){
-        return getFileExt(filename).toLowerCase().matches(Constant.IMAGE_SUFFIXES_SCOPE);
+        return getFileExt(filename).toLowerCase().matches(Constant.FileConstant.IMAGE_SUFFIXES_SCOPE);
     }
 
     /**
@@ -264,7 +264,7 @@ public class FileUtil {
      * @return
      */
     public static boolean isVideo(String filename){
-        return getFileExt(filename).toLowerCase().matches(Constant.VIDEO_SUFFIXES_SCOPE);
+        return getFileExt(filename).toLowerCase().matches(Constant.FileConstant.VIDEO_SUFFIXES_SCOPE);
     }
 
     /**
@@ -291,7 +291,7 @@ public class FileUtil {
      * @return
      */
     public static boolean isAudio(String filename){
-        return getFileExt(filename).toLowerCase().matches(Constant.AUDIO_SUFFIXES_SCOPE);
+        return getFileExt(filename).toLowerCase().matches(Constant.FileConstant.AUDIO_SUFFIXES_SCOPE);
     }
 
     /**
@@ -318,7 +318,7 @@ public class FileUtil {
      * @return
      */
     public static boolean isOffice(String filename){
-        return getFileExt(filename).toLowerCase().matches(Constant.OFFICE_SUFFIXES_SCOPE);
+        return getFileExt(filename).toLowerCase().matches(Constant.FileConstant.OFFICE_SUFFIXES_SCOPE);
     }
 
     /**
@@ -345,7 +345,7 @@ public class FileUtil {
      * @return
      */
     public static boolean isThumb(String filename){
-        return getFileExt(filename).toLowerCase().matches(Constant.THUMB_SUFFIXES_SCOPE);
+        return getFileExt(filename).toLowerCase().matches(Constant.FileConstant.THUMB_SUFFIXES_SCOPE);
     }
 
     /**

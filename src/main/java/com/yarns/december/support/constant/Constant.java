@@ -2,153 +2,138 @@ package com.yarns.december.support.constant;
 
 /**
  * 系统常量
+ *
  * @author Yarns
  */
-public class Constant {
+public interface Constant {
 
     /**
      * 基础用户角色ID
      */
-    public static final Long BASIC_ROLE_ID = 1L;
+    Long BASIC_ROLE_ID = 1L;
 
     /**
      * 超管
      */
-    public static final String ADMIN_ROLE = "admin";
+    String ADMIN_ROLE = "admin";
 
     /**
      * 基础密码
      */
-    public static final String BASE_PASS = "111111";
-
-    /**
-     * 系统配置盲盒code
-     */
-    public static final String AGENT_BIND_BOX_CODE = "agent_product_code";
-
-    /**
-     * 库存扣减锁标识
-     */
-    public static final String AGENT_CLOUD_LOCK = "AgentStockLock:";
-
-    /**
-     * 图片存放的路径
-     */
-    public static final String STATIC_IMAGES_FOLDER = "images";
-
-    /**
-     * 视频存放的路径
-     */
-    public static final String STATIC_VIDEOS_FOLDER = "videos";
-
-    /**
-     * 音频存放的路径
-     */
-    public static final String STATIC_AUDIOS_FOLDER = "audios";
-
-    /**
-     * office存放的路径
-     */
-    public static final String STATIC_OFFICES_FOLDER = "offices";
-
-    /**
-     * 其他文件存放的路径
-     */
-    public static final String OTHERS_FILES_FOLDER = "others";
-    /**
-     * 图片后缀范围, 正则表达式, 必须小写
-     */
-    public static final String IMAGE_SUFFIXES_SCOPE = "jpg|gif|png|jpeg";
-
-    /**
-     * 视频后缀范围, 正则表达式, 必须小写
-     */
-    public static final String VIDEO_SUFFIXES_SCOPE = "mp4|flv|f4v|webm|m3u8|rmvb|avi|3gp|rm";
-
-    /**
-     * 音频后缀范围, 正则表达式, 必须小写
-     */
-    public static final String AUDIO_SUFFIXES_SCOPE = "mp3|wav|ogg|flac|m4a|mp4|aac|wma";
-
-    /**
-     * office后缀范围, 正则表达式, 必须小写
-     */
-    public static final String OFFICE_SUFFIXES_SCOPE = "doc|docx|ppt|pptx|xls|xlsx|pdf";
-
-    /**
-     * 压缩文件后缀范围, 正则表达式, 必须小写
-     */
-    public static final String THUMB_SUFFIXES_SCOPE = "zip|rar|gzip|jar|7z";
-    /**
-     * 限流码
-     */
-    public static final String GATEWAY_LIMIT_CODE = "gatewayLimit:code:";
-
-    /**
-     * 限流计数器
-     */
-    public static final String GATEWAY_LIMIT_NUMBER = "gatewayLimit:number:";
-
-
-    /**
-     * redis存储用户导入时的用户登录账号 key
-     */
-    public static final String IMPORT_USER_REDIS = "import:user:";
-
+    String BASE_PASS = "111111";
 
     /**
      * redis存储授权码 key
      */
-    public static final String AUTHORIZATION_CODE = "authorization:code:";
+    String AUTHORIZATION_CODE = "authorization:code:";
 
     /**
      * 异步线程池名称
      */
-    public static final String ASYNC_POOL = "AsyncThreadPool";
+    String ASYNC_POOL = "AsyncThreadPool";
 
     /**
      * OAUTH2 令牌类型 https://oauth.net/2/bearer-tokens/
      */
-    public static final String OAUTH2_TOKEN_TYPE = "bearer";
+    String OAUTH2_TOKEN_TYPE = "bearer";
 
     /**
      * 排序规则：降序
      */
-    public static final String ORDER_DESC = "descending";
+    String ORDER_DESC = "descending";
     /**
      * 排序规则：升序
      */
-    public static final String ORDER_ASC = "ascending";
-
-    /**
-     * 允许下载的文件类型，根据需求自己添加（小写）
-     */
-    public static final String[] VALID_FILE_TYPE = {"xlsx", "zip"};
+    String ORDER_ASC = "ascending";
 
 
     /**
      * Java默认临时目录
      */
-    public static final String JAVA_TEMP_DIR = "java.io.tmpdir";
+    String JAVA_TEMP_DIR = "java.io.tmpdir";
     /**
      * utf-8
      */
-    public static final String UTF8 = "utf-8";
+    String UTF8 = "utf-8";
 
-    /**
-     * gif类型
-     */
-    public static final String GIF = "gif";
-    /**
-     * png类型
-     */
-    public static final String PNG = "png";
+    String LOCALHOST = "localhost";
+    String LOCALHOST_IP = "127.0.0.1";
+    interface Redis {
+        /**
+         * 默认缓存过期时间（秒） 全局默认30分钟
+         */
+        long EXPIRE_TIME = 60 * 30;
+        /**
+         * 验证码 key前缀
+         */
+        String CODE_PREFIX = "captcha.";
 
-    /**
-     * 验证码 key前缀
-     */
-    public static final String CODE_PREFIX = "captcha.";
+    }
 
-    public static final String LOCALHOST = "localhost";
-    public static final String LOCALHOST_IP = "127.0.0.1";
+    interface FileConstant {
+        /**
+         * gif类型
+         */
+        String GIF = "gif";
+        /**
+         * png类型
+         */
+        String PNG = "png";
+
+        /**
+         * 图片存放的路径
+         */
+        String STATIC_IMAGES_FOLDER = "images";
+
+        /**
+         * 视频存放的路径
+         */
+        String STATIC_VIDEOS_FOLDER = "videos";
+
+        /**
+         * 音频存放的路径
+         */
+        String STATIC_AUDIOS_FOLDER = "audios";
+
+        /**
+         * office存放的路径
+         */
+        String STATIC_OFFICES_FOLDER = "offices";
+
+        /**
+         * 其他文件存放的路径
+         */
+        String OTHERS_FILES_FOLDER = "others";
+        /**
+         * 图片后缀范围, 正则表达式, 必须小写
+         */
+        String IMAGE_SUFFIXES_SCOPE = "jpg|gif|png|jpeg";
+
+        /**
+         * 视频后缀范围, 正则表达式, 必须小写
+         */
+        String VIDEO_SUFFIXES_SCOPE = "mp4|flv|f4v|webm|m3u8|rmvb|avi|3gp|rm";
+
+        /**
+         * 音频后缀范围, 正则表达式, 必须小写
+         */
+        String AUDIO_SUFFIXES_SCOPE = "mp3|wav|ogg|flac|m4a|mp4|aac|wma";
+
+        /**
+         * office后缀范围, 正则表达式, 必须小写
+         */
+        String OFFICE_SUFFIXES_SCOPE = "doc|docx|ppt|pptx|xls|xlsx|pdf";
+
+        /**
+         * 压缩文件后缀范围, 正则表达式, 必须小写
+         */
+        String THUMB_SUFFIXES_SCOPE = "zip|rar|gzip|jar|7z";
+
+        /**
+         * 允许下载的文件类型，根据需求自己添加（小写）
+         */
+        String[] VALID_FILE_TYPE = {"xlsx", "zip"};
+    }
+
+
 }

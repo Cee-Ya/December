@@ -1,11 +1,11 @@
 package com.yarns.december.entity.system;
 
-import java.util.Date;
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import org.apache.ibatis.type.Alias;
-import com.baomidou.mybatisplus.annotation.*;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 系统参数表 Entity
@@ -52,8 +52,8 @@ public class SysParams implements Serializable {
     /**
      * 参数值
      */
-    @TableField("value")
-    private String value;
+    @TableField("param_value")
+    private String paramValue;
 
     /**
      * 
