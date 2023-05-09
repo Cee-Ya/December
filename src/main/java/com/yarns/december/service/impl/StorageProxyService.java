@@ -20,7 +20,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class StorageProxyService implements StorageService, InitializingBean {
     private final SysParamsService paramsService;
-
     private StorageService storageService;
 
     @Override

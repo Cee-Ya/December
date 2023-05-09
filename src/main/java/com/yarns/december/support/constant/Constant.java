@@ -144,6 +144,7 @@ public interface Constant {
     interface StorageType {
         String ALI = "ali";
         String TENCENT = "tencent";
+        String QINIU = "qiniu";
     }
 
     interface Storage {

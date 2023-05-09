@@ -1,5 +1,6 @@
 package com.yarns.december.controller;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import com.yarns.december.entity.base.CommonResult;
 import com.yarns.december.service.impl.StorageProxyService;
 import lombok.AllArgsConstructor;
@@ -20,7 +21,7 @@ import java.util.Map;
 @Validated
 @RestController
 @RequestMapping("storage")
-@DependsOn({"aliyunStorageService","tencentStorageService"})
+@DependsOn({"aliyunStorageService","tencentStorageService","qiniuStorageService"})
 @AllArgsConstructor
 @SuppressWarnings("unchecked")
 public class StorageController {
@@ -32,6 +33,7 @@ public class StorageController {
      * @return Map<String,String>
      */
     @GetMapping("signature")
+    @SaIgnore
     public CommonResult<Map<String,Object>> getSignature() throws Exception {
         return CommonResult.ok().setResult(storageService.getSignature());
     }
