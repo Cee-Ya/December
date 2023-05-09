@@ -3,6 +3,7 @@ package com.yarns.december.config;
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -99,6 +100,7 @@ public class MvcConfigure implements WebMvcConfigurer {
     public MybatisPlusInterceptor paginationInterceptor() {
         MybatisPlusInterceptor paginationInterceptor = new MybatisPlusInterceptor();
         paginationInterceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+        paginationInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
         return paginationInterceptor;
     }
 
