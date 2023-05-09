@@ -62,10 +62,6 @@ public class CommonController {
         if (file.isEmpty()) {
             return CommonResult.fail("上传文件不能为空");
         }
-        //文件大小是否超过限制
-        if (FileUtil.checkFileSize(file, maxSize)) {
-            return CommonResult.fail("上传文件大小不能超过" + maxSize);
-        }
         String fileName = FileUtil.getDateFileName(file.getOriginalFilename());
         // 判断文件夹是否存在
         String folderPath = FileUtil.getFolderByType(fileName,path);
@@ -95,12 +91,6 @@ public class CommonController {
         // 校验文件
         if (files.length == 0) {
             return CommonResult.fail("上传文件不能为空");
-        }
-        //文件大小是否超过限制
-        for (MultipartFile file : files) {
-            if (FileUtil.checkFileSize(file, maxSize)) {
-                return CommonResult.fail("上传文件大小不能超过" + maxSize);
-            }
         }
         List<String> resultPath = Lists.newArrayListWithCapacity(files.length);
         for (MultipartFile file : files) {

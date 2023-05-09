@@ -30,32 +30,6 @@ public class FileUtil {
     private static final int BUFFER = 1024 * 8;
 
     /**
-     * 判断文件是否符合大小
-     * @param file 文件
-     * @param maxSize 文件最大大小 格式1MB 1GB 1KB
-     * @return 文件是否符合大小
-     */
-    public static boolean checkFileSize(MultipartFile file,String maxSize) {
-        int unit = 1; // 默认单位为 byte
-        long limitSize = Long.parseLong(maxSize.substring(0, maxSize.length() - 2));
-        String unitStr = maxSize.substring(maxSize.length() - 2).toUpperCase();
-        switch (unitStr) {
-            case "KB":
-                unit = 1024;
-                break;
-            case "MB":
-                unit = 1024 * 1024;
-                break;
-            case "GB":
-                unit = 1024 * 1024 * 1024;
-                break;
-        }
-        long fileSize = file.getSize();
-        return fileSize > (limitSize * unit);
-    }
-
-
-    /**
      * 获取根据日期生成的文件名称
      * @param originalFilename 原本的文件名称
      * @return 根据日期生成的文件名称
