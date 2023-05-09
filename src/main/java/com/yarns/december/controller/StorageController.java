@@ -49,7 +49,7 @@ public class StorageController {
      * @throws Exception
      */
     @PostMapping("upload")
-    @SaIgnore
+    @ControllerEndpoint(operation = "上传文件")
     public CommonResult<List<String>> upload(MultipartFile[] files) throws Exception {
         if(files == null || files.length == 0) {
             return CommonResult.fail("文件不能为空");
