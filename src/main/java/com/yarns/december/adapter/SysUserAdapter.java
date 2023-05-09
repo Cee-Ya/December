@@ -205,12 +205,4 @@ public class SysUserAdapter {
         infoVo.setRoleIds(sysUserRoles.stream().map(SysUserRole::getRoleId).collect(Collectors.toList()));
         return infoVo;
     }
-
-    public List<EnumsVo> getAgentWorkerChooseUsers(String mobileOrUsername) {
-        return sysUserService.getUserByAgentWorker(mobileOrUsername);
-    }
-
-    public List<EnumsVo> getAgentChooseUsers(String mobileOrUsername) {
-        return sysUserService.getUserByAgent(mobileOrUsername);
-    }
 }

@@ -62,27 +62,6 @@ public class SysUserController {
     }
 
     /**
-     * 获取代理商员工用户列表
-     * @param mobileOrUsername
-     * @return
-     */
-    @GetMapping("list/agent/worker")
-    public CommonResult<List<EnumsVo>> getAgentWorkerChooseUsers(String mobileOrUsername){
-        return CommonResult.ok().setResult(this.sysUserAdapter.getAgentWorkerChooseUsers(mobileOrUsername));
-    }
-
-    /**
-     * 获取代理商用户列表
-     * @param mobileOrUsername
-     * @return
-     */
-    @GetMapping("list/agent")
-    public CommonResult<List<EnumsVo>> getAgentChooseUsers(String mobileOrUsername){
-        return CommonResult.ok().setResult(this.sysUserAdapter.getAgentChooseUsers(mobileOrUsername));
-    }
-
-
-    /**
      * 新增用户
      * @param sysUser 用户对象
      * @return

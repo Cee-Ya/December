@@ -54,9 +54,5 @@ public interface SysUserService extends IService<SysUser> {
 
     void updateSysUserStateByUserIds(List<Long> agentIds, Boolean agentStatus);
 
-    List<EnumsVo> getUserByAgentWorker(String mobileOrUsername);
-
-    List<EnumsVo> getUserByAgent(String mobileOrUsername);
-
     SysUser getUserByMobile(String mobile);
 }
