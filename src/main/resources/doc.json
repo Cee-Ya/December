@@ -24,7 +24,7 @@
       "required": true,
       "since": "0.0.1",
       "pathPatterns": "/**",
-      "excludePathPatterns": "/auth/login,/generator/zip"
+      "excludePathPatterns": "/auth/login,/generator/zip,/common/captcha"
     }
   ],
   "revisionLogs": [
