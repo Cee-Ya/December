@@ -3,6 +3,7 @@ package com.yarns.december.support.handler;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.yarns.december.entity.base.ResponseBo;
 import com.yarns.december.support.utils.LogErrorUtils;
+import io.undertow.server.handlers.form.MultiPartParserDefinition;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.Ordered;
@@ -17,15 +18,19 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MultipartException;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
  * 异常管理
+ *
  * @author Yarns
  */
 @SuppressWarnings("Duplicates")
@@ -116,5 +121,15 @@ public class YarnsExceptionHandler {
     public ResponseBo handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
         log.error("系统内部异常，异常信息", e);
         return ResponseBo.fail("缺失必要参数" + StringUtils.substringBetween(e.getMessage(), "'", "'"));
+    }
+
+    @ExceptionHandler(value = MultipartException.class)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseBo fileUploadExceptionHandler(MultipartException exception) {
+        Throwable rootCause = exception.getRootCause();
+        if (rootCause instanceof MultiPartParserDefinition.FileTooLargeException) {
+            return ResponseBo.fail("文件大小超过限制");
+        }
+        return ResponseBo.fail("文件上传失败");
     }
 }

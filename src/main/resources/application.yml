@@ -1,7 +1,11 @@
 server:
   port: 2323
+  shutdown: graceful
   undertow:
-    max-http-post-size: 0
+    max-http-post-size: -1B
+    threads:
+      io: 8
+      worker: 256
     # 以下的配置会影响buffer,这些buffer会用于服务器连接的IO操作,有点类似netty的池化内存管理
     # 每块buffer的空间大小,越小的空间被利用越充分
     buffer-size: 1024
@@ -16,6 +20,11 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+  servlet:
+    multipart:
+      enabled: true # 是否支持多部分上传。
+      maxFileSize: 10MB # 最大支持文件上传的大小
+      maxRequestSize: 100MB # 支持请求最大文件上传的大小
   profiles:
     active: dev
 #  ####################################

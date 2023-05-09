@@ -36,12 +36,6 @@
             <artifactId>easy-captcha</artifactId>
             <version>1.6.2</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.graalvm.js/js-scriptengine -->
-        <dependency>
-            <groupId>org.graalvm.js</groupId>
-            <artifactId>js-scriptengine</artifactId>
-            <version>22.0.0.2</version>
-        </dependency>
 
 
         <dependency>
