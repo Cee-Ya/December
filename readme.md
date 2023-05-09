@@ -12,9 +12,33 @@
 
 配置文件位于数据表 `t_sys_params` 中
 
-1. 阿里云需要配置的参数
-   
-2. 腾讯云需要配置的参数
-3. 七牛云需要配置的参数
+**阿里云需要配置的参数**
 
+| 参数名     | key                     | 说明                |
+| ---------- | ----------------------- | ------------------- |
+| accessId*  | storage-accessKeyId     | accessId            |
+| accessKey* | storage-accessKeySecret | accessKey           |
+| endpoint*  | storage-endpoint        | Endpoint            |
+| bucket*    | storage-bucket          | Bucket名称          |
+| host       | storage-host            | Host地址            |
+| dir        | storage-dir             | 上传到OSS文件的前缀 |
+
+**腾讯云需要配置的参数**
+
+| 参数名     | key                     | 说明                |
+| ---------- | ----------------------- | ------------------- |
+| accessId*  | storage-accessKeyId     | accessId            |
+| accessKey* | storage-accessKeySecret | accessKey           |
+| endpoint*  | storage-endpoint        | Endpoint            |
+| bucket*    | storage-bucket          | Bucket名称          |
+| host       | storage-host            | Host地址            |
+| dir        | storage-dir             | 上传到OSS文件的前缀 |
+
+**七牛云需要配置的参数**
+
+| 参数名     | key                     | 说明       |
+| ---------- | ----------------------- | ---------- |
+| accessKey* | storage-accessKeyId     | accessKey  |
+| secretKey* | storage-accessKeySecret | secretKey  |
+| bucket*    | storage-bucket          | Bucket名称 |
 
