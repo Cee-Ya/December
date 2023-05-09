@@ -29,9 +29,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class StorageProxyService implements StorageService, InitializingBean {
     private final SysParamsService paramsService;
-
-    @Value("${december.upload.max-size}")
-    private String maxSize;
     private StorageService storageService;
 
     @Override
