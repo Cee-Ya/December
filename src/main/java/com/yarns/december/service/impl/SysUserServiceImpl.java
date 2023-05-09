@@ -29,7 +29,6 @@ import java.util.List;
 @Service("sysUserService")
 @RequiredArgsConstructor
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
     public IPage<SysUserPageVo> findSysUsers(QueryRequest request, SysUser sysUser) {
         Page<SysUser> page = new Page<>(request.getPageNum(), request.getPageSize());
@@ -73,16 +72,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void updateSysUserStateByUserIds(List<Long> agentIds, Boolean agentStatus) {
         baseMapper.updateSysUserStateByUserIds(agentIds,agentStatus);
-    }
-
-    @Override
-    public List<EnumsVo> getUserByAgentWorker(String mobileOrUsername) {
-        return baseMapper.getUserByAgentWorker(mobileOrUsername);
-    }
-
-    @Override
-    public List<EnumsVo> getUserByAgent(String mobileOrUsername) {
-        return baseMapper.getUserByAgent(mobileOrUsername);
     }
 
     @Override

@@ -38,45 +38,4 @@
         ORDER BY
             id DESC
     </select>
-    <select id="getUserByAgentWorker" resultType="com.yarns.december.entity.base.vo.EnumsVo">
-        SELECT
-            u.id,
-            u.nickname `name`
-        FROM
-            `t_sys_user` u
-                JOIN t_sys_user_role ur ON u.id = ur.user_id
-                JOIN t_sys_role r ON ur.role_id = r.id
-        WHERE
-            r.role_token = 'agentWorker'
-          <if test="mobileOrUsername != null and mobileOrUsername != ''">
-              AND (u.mobile LIKE CONCAT('%',#{mobileOrUsername},'%') OR
-                   u.nickname LIKE CONCAT('%',#{mobileOrUsername},'%'))
-          </if>
-          AND u.id NOT IN (
-            SELECT
-                ai.user_id
-            FROM
-                t_agent_info ai
-            WHERE ai.parent_id != 0)
-    </select>
-    <select id="getUserByAgent" resultType="com.yarns.december.entity.base.vo.EnumsVo">
-        SELECT
-            u.id,
-            u.nickname `name`
-        FROM
-            `t_sys_user` u
-            JOIN t_sys_user_role ur ON u.id = ur.user_id
-            JOIN t_sys_role r ON ur.role_id = r.id
-        WHERE
-            r.role_token = 'agent'
-        <if test="mobileOrUsername != null and mobileOrUsername != ''">
-            AND (u.mobile LIKE CONCAT('%',#{mobileOrUsername},'%') OR
-            u.nickname LIKE CONCAT('%',#{mobileOrUsername},'%'))
-        </if>
-        AND u.id NOT IN (
-            SELECT
-            ai.user_id
-            FROM
-            t_agent_info ai)
-    </select>
 </mapper>
