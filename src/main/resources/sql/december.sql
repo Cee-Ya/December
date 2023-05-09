@@ -80,6 +80,16 @@ CREATE TABLE `t_sys_params`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '系统参数表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Records of t_sys_params
+-- ----------------------------
+INSERT INTO `t_sys_params` VALUES (1, 'storage-type', 'qiniu', 1, '2023-05-08 21:53:23', '2023-05-08 21:53:26', 0);
+INSERT INTO `t_sys_params` VALUES (2, 'storage-accessKeyId', 'asdwqqqqqqqqqwewqe6', 1, '2023-05-08 21:54:19', '2023-05-08 21:54:22', 0);
+INSERT INTO `t_sys_params` VALUES (3, 'storage-accessKeySecret', 'saddddddddddddddddw', 1, '2023-05-08 21:58:06', '2023-05-08 21:58:09', 0);
+INSERT INTO `t_sys_params` VALUES (4, 'storage-endpoint', 'ap-chengdu', 1, '2023-05-08 21:59:08', '2023-05-08 21:59:11', 0);
+INSERT INTO `t_sys_params` VALUES (5, 'storage-bucket', 'december', 1, '2023-05-08 21:59:47', '2023-05-08 21:59:49', 0);
+INSERT INTO `t_sys_params` VALUES (6, 'storage-host', NULL, 1, '2023-05-08 22:00:09', '2023-05-08 22:00:12', 0);
+INSERT INTO `t_sys_params` VALUES (7, 'storage-dir', 'december', 1, '2023-05-08 22:00:39', '2023-05-08 22:00:42', 0);
+-- ----------------------------
 -- Table structure for t_sys_role
 -- ----------------------------
 DROP TABLE IF EXISTS `t_sys_role`;
