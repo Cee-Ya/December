@@ -1,6 +1,5 @@
 package com.yarns.december.controller;
 
-import cn.dev33.satoken.annotation.SaIgnore;
 import com.yarns.december.entity.base.CommonResult;
 import com.yarns.december.service.impl.StorageProxyService;
 import lombok.AllArgsConstructor;
@@ -33,7 +32,6 @@ public class StorageController {
      * @return Map<String,String>
      */
     @GetMapping("signature")
-    @SaIgnore
     public CommonResult<Map<String,Object>> getSignature() throws Exception {
         return CommonResult.ok().setResult(storageService.getSignature());
     }
