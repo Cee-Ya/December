@@ -36,9 +36,11 @@
 
 **七牛云需要配置的参数**
 
-| 参数名     | key                     | 说明       |
-| ---------- | ----------------------- | ---------- |
-| accessKey* | storage-accessKeyId     | accessKey  |
-| secretKey* | storage-accessKeySecret | secretKey  |
-| bucket*    | storage-bucket          | Bucket名称 |
+| 参数名     | key                     | 说明                 |
+| ---------- | ----------------------- |--------------------|
+| accessKey* | storage-accessKeyId     | accessKey          |
+| secretKey* | storage-accessKeySecret | secretKey          |
+| bucket*    | storage-bucket          | Bucket名称           |
+| dir        | storage-dir             | 上传到OSS文件的前缀 |
+| host       | storage-host            | Host地址,如果使用后端上传请必填 |
 

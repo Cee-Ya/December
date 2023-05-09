@@ -6,6 +6,7 @@ import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.common.utils.BinaryUtil;
 import com.aliyun.oss.model.MatchMode;
 import com.aliyun.oss.model.PolicyConditions;
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.google.common.collect.Maps;
 import com.yarns.december.service.StorageFactory;
 import com.yarns.december.service.StorageService;
@@ -16,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.sql.Date;
 import java.util.Map;
@@ -48,7 +50,7 @@ public class AliyunStorageServiceImpl implements StorageService, InitializingBea
          this.callbackUrl = sysParamsService.getSystemParamsValueByKey(Constant.Storage.CALLBACK_URL);
          String host = sysParamsService.getSystemParamsValueByKey(Constant.Storage.HOST);
          if(StringUtils.isBlank(host)){
-             this.host = "http://" + sysParamsService.getSystemParamsValueByKey(Constant.Storage.BUCKET) + "." + sysParamsService.getSystemParamsValueByKey(Constant.Storage.ENDPOINT);
+             this.host = "https://" + sysParamsService.getSystemParamsValueByKey(Constant.Storage.BUCKET) + "." + sysParamsService.getSystemParamsValueByKey(Constant.Storage.ENDPOINT);
          }else{
              this.host = host;
          }
@@ -86,5 +88,17 @@ public class AliyunStorageServiceImpl implements StorageService, InitializingBea
             respMap.put("callback", base64CallbackBody);
         }
         return respMap;
+    }
+
+    @Override
+    public String upload(InputStream is, String path) throws Exception {
+        if(StringUtils.isNotBlank(dir)){
+            path = dir + StringPool.SLASH + path;
+        }
+        oss.putObject(sysParamsService.getSystemParamsValueByKey(Constant.Storage.BUCKET), path, is);
+        if(StringUtils.isBlank(host)){
+            return "https://" + sysParamsService.getSystemParamsValueByKey(Constant.Storage.BUCKET) + "." + sysParamsService.getSystemParamsValueByKey(Constant.Storage.ENDPOINT) + "/" + path;
+        }
+        return this.host + "/" + path;
     }
 }
