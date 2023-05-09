@@ -21,7 +21,7 @@ public class AddressUtils {
         try {
             vIndex = Searcher.loadVectorIndexFromFile(dbPath);
         } catch (Exception e) {
-            System.out.printf("failed to load vector index from `%s`: %s\n", dbPath, e);
+            log.error("failed to load vector index from `{}`: {}", dbPath, e);
             return StringUtils.EMPTY;
         }
 
@@ -30,7 +30,7 @@ public class AddressUtils {
         try {
             searcher = Searcher.newWithVectorIndex(dbPath, vIndex);
         } catch (Exception e) {
-            System.out.printf("failed to create vectorIndex cached searcher with `%s`: %s\n", dbPath, e);
+            log.error("failed to create vectorIndex cached searcher with `{}`: {}", dbPath, e);
             return StringUtils.EMPTY;
         }
 
@@ -39,10 +39,10 @@ public class AddressUtils {
             long sTime = System.nanoTime();
             String region = searcher.search(ip);
             long cost = TimeUnit.NANOSECONDS.toMicros(System.nanoTime() - sTime);
-            System.out.printf("{region: %s, ioCount: %d, took: %d μs}\n", region, searcher.getIOCount(), cost);
+            log.info("region: {}, ioCount: {}, took: {} μs", region, searcher.getIOCount(), cost);
             return region;
         } catch (Exception e) {
-            System.out.printf("failed to search(%s): %s\n", ip, e);
+            log.error("failed to search({}): {}", ip, e);
         }
         return StringUtils.EMPTY;
     }

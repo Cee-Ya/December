@@ -10,10 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Yarns
@@ -50,6 +47,28 @@ public abstract class AspectSupport {
         }
         return null;
     }
+    @SuppressWarnings("rawtypes")
+    public boolean isFilterObject(final Object o) {
+        Class<?> clazz = o.getClass();
+        if (clazz.isArray()) {
+            return clazz.getComponentType().isAssignableFrom(MultipartFile.class);
+        }
+        else if (Collection.class.isAssignableFrom(clazz)) {
+            Collection collection = (Collection) o;
+            for (Object value : collection) {
+                return value instanceof MultipartFile;
+            }
+        }
+        else if (Map.class.isAssignableFrom(clazz)) {
+            Map map = (Map) o;
+            for (Object value : map.entrySet()) {
+                Map.Entry entry = (Map.Entry) value;
+                return entry.getValue() instanceof MultipartFile;
+            }
+        }
+        return o instanceof MultipartFile || o instanceof HttpServletRequest || o instanceof HttpServletResponse;
+    }
+
 
     @SuppressWarnings("all")
     protected StringBuilder handleJsonParams(StringBuilder params, Object[] args, String[] paramNames) throws JsonProcessingException {
@@ -57,14 +76,10 @@ public abstract class AspectSupport {
             params.append("[");
             StringBuilder sb1 = new StringBuilder();
             for (int i = 0; i < args.length; i++) {
-                if (args[i] instanceof MultipartFile) {
-                    MultipartFile file = (MultipartFile) args[i];
-                    if (i == 0) {
-                        sb1.append("{").append("\"").append(paramNames[i]).append("\"").append(":").append(file.getName()).append("}");
-                    }else {
-                        sb1.append(",{").append("\"").append(paramNames[i]).append("\"").append(":").append(file.getName()).append("}");
-                    }
-                } else if (args[i] instanceof HttpServletResponse) {
+                if(isFilterObject(args[i])){
+                    continue;
+                }
+                if (args[i] instanceof HttpServletResponse) {
                     if (i == 0) {
                         sb1.append("{").append("\"").append(paramNames[i]).append("\"").append(":").append("response流").append("}");
                     }else {

@@ -10,8 +10,10 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.yarns.december.support.constant.Constant;
 import com.yarns.december.support.constant.EndpointConstant;
+import com.yarns.december.support.filter.xss.XssFilter;
 import com.yarns.december.support.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -26,6 +28,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -67,6 +71,24 @@ public class MvcConfigure implements WebMvcConfigurer {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsFilter(source);
+    }
+
+    /**
+     * XssFilter
+     * @return
+     */
+    @Bean
+    public FilterRegistrationBean<XssFilter> xssFilterRegistrationBean() {
+        FilterRegistrationBean<XssFilter> filterRegistrationBean = new FilterRegistrationBean<>();
+        filterRegistrationBean.setFilter(new XssFilter());
+        filterRegistrationBean.setOrder(1);
+        filterRegistrationBean.setEnabled(true);
+        filterRegistrationBean.addUrlPatterns("/*");
+        Map<String, String> initParameters = new HashMap<>();
+        initParameters.put("excludes", "/favicon.ico,/img/*,/js/*,/css/*");
+        initParameters.put("isIncludeRichText", "true");
+        filterRegistrationBean.setInitParameters(initParameters);
+        return filterRegistrationBean;
     }
 
     /**
