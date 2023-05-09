@@ -21,7 +21,7 @@
 
 ## 分支功能
  - master 基础分支
- - oss 云存储分支 进行中
+ - obj-storage 云存储分支 进行中
  - message 短信分支 未开始
  - pay 支付分支 进行中
  - pdf pdf转换分支 未开始
