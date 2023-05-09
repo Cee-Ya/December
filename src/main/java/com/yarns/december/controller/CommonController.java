@@ -2,16 +2,22 @@ package com.yarns.december.controller;
 
 import com.google.common.collect.Lists;
 import com.yarns.december.entity.base.CommonResult;
+import com.yarns.december.service.impl.ValidateCodeService;
+import com.yarns.december.support.exception.BaseException;
 import com.yarns.december.support.utils.FileUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -30,6 +36,19 @@ public class CommonController {
     private String maxSize;
     @Value("${december.upload.url}")
     private String url;
+
+    private final ValidateCodeService validateCodeService;
+
+    /**
+     * 获取图形验证码
+     * @param key 验证码key
+     * @throws IOException
+     * @throws BaseException
+     */
+    @GetMapping("captcha")
+    public void getCaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException, BaseException {
+        validateCodeService.create(request,response);
+    }
 
     /**
      * 上传文件(单个)
