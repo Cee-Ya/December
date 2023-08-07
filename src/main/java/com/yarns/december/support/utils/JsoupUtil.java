@@ -2,7 +2,7 @@ package com.yarns.december.support.utils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.safety.Whitelist;
+import org.jsoup.safety.Safelist;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +20,7 @@ public class JsoupUtil {
      * h5, h6, i, img, li, ol, p, pre, q, small, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, u, ul。
      * 结果不包含标签rel=nofollow ，如果需要可以手动添加。
      */
-    static Whitelist WHITELIST = Whitelist.relaxed();
+    static Safelist WHITELIST = Safelist.relaxed();
 
     /**
      * 配置过滤化参数,不对代码进行格式化
