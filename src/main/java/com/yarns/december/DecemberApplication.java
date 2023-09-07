@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
 /**
- * @Author Yarns
- * @Date 15:14
- * @Version 1.0
+ * @author  Yarns
+ * @date 15:14
+ * @version  1.0
  **/
 @SpringBootApplication
 @MapperScan("com.yarns.december.mapper")

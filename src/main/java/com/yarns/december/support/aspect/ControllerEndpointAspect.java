@@ -30,7 +30,7 @@ import java.util.Date;
 @Component
 public class ControllerEndpointAspect extends AspectSupport {
 
-    private Logger logger = LoggerFactory.getLogger("monitor");
+    private final Logger logger = LoggerFactory.getLogger("monitor");
 
     @Override
     @Autowired

@@ -143,7 +143,7 @@ public class TreeUtil {
             r.setParentId(null);
             r.setHasChildren(null);
             r.setHasParent(null);
-            if(r.getChildren() != null && r.getChildren().size() > 0){
+            if(r.getChildren() != null && !r.getChildren().isEmpty()){
                 removeIds(r.getChildren());
             }
         });

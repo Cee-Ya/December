@@ -47,7 +47,7 @@ public class SysRoleAdapter {
         List<SysRoleMenu> roleMenus = this.sysRoleMenuService.getRoleMenusByRoleId(roleId);
         StringBuilder sb = new StringBuilder();
         for (SysRoleMenu roleMenu : roleMenus) {
-            if(sb.length() > 0){
+            if(!sb.isEmpty()){
                 sb.append(StringPool.COMMA).append(roleMenu.getMenuId());
             }else {
                 sb.append(roleMenu.getMenuId());
@@ -85,7 +85,7 @@ public class SysRoleAdapter {
             //确定当前角色的角色类型后再判断传入的资源的菜单类型
             var menu = sysMenuService.getById(menuId);
             if(Objects.isNull(menu)){
-                throw new BaseException(String.format("菜单id[%d]不合法",menu.getId()));
+                throw new BaseException(String.format("菜单id[%s]不合法",menuId));
             }
             var roleMenu = new SysRoleMenu();
             if (StringUtils.isNotBlank(menuId)) {

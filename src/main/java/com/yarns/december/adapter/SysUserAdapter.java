@@ -66,7 +66,7 @@ public class SysUserAdapter {
     public String login(LoginBo bo) throws BaseException, JsonProcessingException {
         // 校验验证码
         validateCodeService.check(bo.getKey(),bo.getCaptcha());
-        val user = sysUserService.getUserByLoginName(bo.getUsername());
+        SysUser user = sysUserService.getUserByLoginName(bo.getUsername());
         if(user == null){
             log.info("用户名不存在");
             throw new BaseException("认证失败");
@@ -78,7 +78,7 @@ public class SysUserAdapter {
         if(!user.getUserStatus()){
             throw new BaseException("账号被冻结");
         }
-        val userSession = new SysUserSessionVo();
+        SysUserSessionVo userSession = new SysUserSessionVo();
         BeanUtils.copyProperties(user, userSession);
         StpUtil.login(user.getId(),objectMapper.writeValueAsString(userSession));
         return StpUtil.getTokenValue();
@@ -96,21 +96,21 @@ public class SysUserAdapter {
         if(bo.getOldPwd().equals(bo.getNewPwd())){
             throw new BaseException("新密码不能与旧密码相同");
         }
-        val temp = sysUserService.getById(bo.getId());
+        SysUser temp = sysUserService.getById(bo.getId());
         if(Objects.isNull(temp)){
             throw new BaseException("用户不存在");
         }
         if(!bCryptPasswordEncoder.matches(bo.getOldPwd(),temp.getPassword())){
             throw new BaseException("旧密码不正确");
         }
-        val user = new SysUser();
+        SysUser user = new SysUser();
         user.setId(bo.getId());
         user.setPassword(bCryptPasswordEncoder.encode(bo.getNewPwd()));
         sysUserService.updateSysUser(user);
     }
 
     public IPage<SysUserPageVo> findSysUsers(QueryRequest request, SysUserPageBo sysUser) {
-        val user = new SysUser();
+        SysUser user = new SysUser();
         BeanUtils.copyProperties(sysUser,user);
         return sysUserService.findSysUsers(request,user);
     }
@@ -136,7 +136,7 @@ public class SysUserAdapter {
 
     @Transactional(propagation = Propagation.REQUIRED,rollbackFor = Exception.class)
     public void createSysUser(SysUserBo sysUser) throws BaseException {
-        val u = new SysUser();
+        SysUser u = new SysUser();
         BeanUtils.copyProperties(sysUser,u);
         createCheck(u);
         //加密
@@ -163,7 +163,7 @@ public class SysUserAdapter {
         if(sysUser.getId().equals(1L) && !StpUtil.hasRole(Constant.ADMIN_ROLE)){
             throw new BaseException("本次操作非法");
         }
-        val user = new SysUser();
+        SysUser user = new SysUser();
         BeanUtils.copyProperties(sysUser,user);
         if(!ValidatorUtil.isMobile(sysUser.getMobile())){
             throw new BaseException("手机号不合法");

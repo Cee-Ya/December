@@ -202,7 +202,7 @@ public class FileUtil {
      */
     public static String getFileExt(String fileName) {
         int potPos = fileName.lastIndexOf('.') + 1;
-        return fileName.substring(potPos, fileName.length());
+        return fileName.substring(potPos);
     }
 
     /**

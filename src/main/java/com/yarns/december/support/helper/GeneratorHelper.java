@@ -32,7 +32,7 @@ import java.util.Objects;
  *
  * @author Yarns
  */
-@SuppressWarnings({"Duplicates", "ClassCanBeRecord", "rawtypes", "unchecked"})
+@SuppressWarnings({"Duplicates", "rawtypes", "unchecked"})
 @Slf4j
 @Component
 @RequiredArgsConstructor

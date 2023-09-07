@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisHelper {
 
 
-    private static String redisPrefix = "";
+    private static final String redisPrefix = "";
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;

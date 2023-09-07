@@ -1,6 +1,7 @@
 package com.yarns.december.support.filter.xss;
 
 
+import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,7 +26,7 @@ public class XssFilter implements Filter {
 	 */
 	private static boolean IS_INCLUDE_RICH_TEXT = false;
 
-	private List<String> excludes = new ArrayList<>();
+	private final List<String> excludes = new ArrayList<>();
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -60,12 +61,12 @@ public class XssFilter implements Filter {
 	}
 
 	private boolean handleExcludeURL(HttpServletRequest request, HttpServletResponse response) {
-		if (excludes == null || excludes.isEmpty()) {
+		if (excludes.isEmpty()) {
 			return false;
 		}
 		String url = request.getServletPath();
 		for (String pattern : excludes) {
-			Pattern p = Pattern.compile("^" + pattern);
+			Pattern p = Pattern.compile(StringPool.HAT + pattern);
 			Matcher m = p.matcher(url);
 			if (m.find()) {
                 return true;
