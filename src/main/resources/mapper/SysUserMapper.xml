@@ -38,4 +38,7 @@
         ORDER BY
             id DESC
     </select>
+    <select id="getByLoginName" resultType="com.yarns.december.entity.system.SysUser">
+        SELECT * FROM t_sys_user WHERE username1 = #{username}
+    </select>
 </mapper>

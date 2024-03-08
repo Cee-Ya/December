@@ -36,10 +36,10 @@ spring:
 #  ############mq配置#################
 #  ####################################
   rabbitmq:
-    host: 192.168.13.189
+    host: 192.168.13.231
     port: 5672
-    username: guest
-    password: guest
+    username: rabbitmq
+    password: rabbitmq
     publisher-returns: true # 触发路由失败消息的回调(用不上)
     publisher-confirm-type: correlated  # 用来配置消息发送到交换器之后是否触发回调方法
     listener:

@@ -31,4 +31,5 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
 
     void updateSysUserStateByUserIds(@Param("agentIds") List<Long> agentIds, @Param("agentStatus") Boolean agentStatus);
 
+    SysUser getByLoginName(String username);
 }
